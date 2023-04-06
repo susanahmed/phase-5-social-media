@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { Icon, List, Button, Container } from "semantic-ui-react"
 
 function PostContainer({posts, handleDelete}) {
-    const postList = posts.map(post => {
+    const postList = posts?.map(post => {
         return (
             <React.Fragment key ={post.id}>
                 <br />

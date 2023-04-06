@@ -3,29 +3,31 @@ from flask_restful import Resource
 
 # Local imports
 from config import app, db, api
-from models import db, User, Friend, Message, Post, Comment
+from models import User, Friend, Message, Post, Comment
 
 class User(Resource):
     def get(self):
-        user_dicts = [user.to_dict(rules=('Friend','Post','Comment')) for user in User.query.all()]
+        user_dicts = [user.to_dict() for user in User.query.all()]
 
         return make_response(
             user_dicts,
             200
         )
-class Post(Resource):
+api.add_resource(User, '/user')
+
+class Posts(Resource):
     def get(self):
-        post_list = [post.to_dict() for post in Post.query.all()]
-        response = make_response(
-            post_list,
+        post_dicts = [post.to_dict() for post in Post.query.all()]
+        return make_response(
+            post_dicts,
             200,
         )
-        return response
 
     def post(self):
         new_post = Post(
-            text=request.get_json()['text'],
-            file=request.request.get_json()['file']
+            description=request.get_json()['description'],
+            file=request.get_json()['file'],
+            likes = request.get_json()['likes']
         )
 
         db.session.add(new_post)

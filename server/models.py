@@ -56,7 +56,7 @@ class Post(db.Model, SerializerMixin):
     __tablename__ = 'posts'
     id = db.Column(db.Integer, primary_key=True)
 
-    text = db.Column(db.String)
+    description = db.Column(db.String)
     file = db.Column(db.String)
     likes = db.Column(db.Integer)
     comments= db.relationship('Comment', backref = 'post')
