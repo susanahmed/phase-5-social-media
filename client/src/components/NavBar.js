@@ -21,7 +21,7 @@ function Navigation() {
       </div>
       <div className="topbarRight">
         <div className="topbarLinks">
-          <span className="topbarLink"><Link to='/home'>Homepage</Link></span>
+          <span className="topbarLink"><Link to='/profile'>Profile</Link></span>
           <span className="topbarLink"><Link to='/feed'>Timeline</Link></span>
         </div>
         <div className="topbarIcons">

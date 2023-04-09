@@ -1,15 +1,12 @@
-from flask import request, make_response
-from flask_restful import Resource
+from flask import request, make_response, session, jsonify, abort
+from flask_restful import Resource, Api
 from flask_bcrypt import Bcrypt
 from config import app, db, api
-from flask_cors import CORS
-from models import User, Friend, Message, Post, Comment
+from werkzeug.exceptions import NotFound, Unauthorized
 
-app = Flask(__name__)
 bcrypt = Bcrypt(app)
-CORS(app)
-api = API(app)
 
+from models import User, Friend, Message, Post, Comment
 
 class Signup(Resource):
     def post(self):
@@ -141,3 +138,7 @@ class PostByID(Resource):
         
         return response
 api.add_resource(PostByID, '/posts/<int:id>')
+
+
+if __name__ == '__main__':
+    app.run(port=5555, debug=True)

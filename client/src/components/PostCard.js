@@ -3,12 +3,11 @@ import {Link} from 'react-router-dom'
 import styled from 'styled-components'
 
 function PostCard({post}){
-    const {description, file, id} = post
+    const {file, id} = post
     return (
         // <Card id={id}>
             <Link to = {`/posts/${id}`}>
                 <div>
-                    <h3>{description}</h3>
                     <p>{file}</p>
                     <img src = "https://techresearchonline.com/wp-content/uploads/2022/08/Zetaplus-%F0%9F%87%B9%F0%9F%87%AC-on-Twitter.webp" />
                 </div>

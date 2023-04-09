@@ -1,12 +1,16 @@
 import './Profile.css'
-import Navigation from './NavBar';
 import PostCont from './PostCont'
-import PostContainer from './PostContainer'
+import PostForm from './PostForm'
+import {useState} from "react"
 
-function Profile() {
+function Profile({posts}, {addPost}) {
+  const [toggle, setToggle] = useState(false)
+
+  const handleClick = () => {
+    setToggle(!toggle);
+  };
     return (
         <>
-        <Navigation />
         <div className="profile">
         {/* <Sidebar /> */}
         <div className="profileRight">
@@ -28,12 +32,17 @@ function Profile() {
                 <span className="profileInfoDesc">Hello there!</span>
             </div>
           </div>
-          <div className="profileRightBottom">
+          {/* <div className="profileRightBottom"> */}
             {/* <Feed /> */}
             {/* <Rightbar profile/> */}
             {/* <PostCont /> */}
-            <PostContainer />
-          </div>
+            <PostForm />
+            <div>
+              <button onClick={handleClick}>Add Post</button>
+              <PostCont posts={posts} addPost={addPost}/>
+            </div>
+            
+          {/* </div> */}
         </div>
       </div>
 
