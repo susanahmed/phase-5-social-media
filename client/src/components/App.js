@@ -12,6 +12,7 @@ import PostForm from './PostForm'
 import EditPostForm from './EditPostForm'
 import Profile from './Profile'
 import PostCont from './PostCont'
+import '../index.css'
 
 function App(){
     const [posts, setPosts] = useState([])
@@ -21,7 +22,8 @@ function App(){
         fetch('/posts')
         .then(r => r.json())
         .then(post_data => setPosts(post_data))
-    },)
+    },[]) 
+    console.log(posts)
 
     function handleDelete(id) {
         fetch(`/posts/${id}`, {
@@ -36,11 +38,11 @@ function App(){
       }
 
     return(
-        <>
+        <div className='background'>
         <Profile />
                 <Switch>
                 <Route path='/posts'>
-                    <PostCont posts={posts} handleDeletex={handleDelete}/>
+                    <PostCont posts={posts} handleDelete={handleDelete}/>
                 </Route>
                 {/* <Route path='/posts'>
                     <IndividualPlaylist songs={songs} setRefresh={setRefresh} refresh={refresh} />
@@ -56,7 +58,7 @@ function App(){
                 </Route> */}
 
                 </Switch>
-        </>
+        </div>
     )
 }
 export default App

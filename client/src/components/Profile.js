@@ -31,7 +31,7 @@ function Profile() {
           <div className="profileRightBottom">
             {/* <Feed /> */}
             {/* <Rightbar profile/> */}
-            <PostCont />
+            {/* <PostCont /> */}
             <PostContainer />
           </div>
         </div>

@@ -1,27 +1,49 @@
 from sqlalchemy_serializer import SerializerMixin
 from sqlalchemy.ext.associationproxy import association_proxy
 from sqlalchemy.orm import validates
+from sqlalchemy.ext.hybrid import hybrid_property
+
+from app import bcrypt
+
 
 from config import db
+
+
 
 class User(db.Model, SerializerMixin):
     __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True)
 
     name = db.Column(db.String, nullable=False)
+    email = db.Column(db.String)
+    username = db.Column(db.String)
     location = db.Column(db.String, nullable=False)
     bio = db.Column(db.String)
     image = db.Column(db.String, nullable=False)
-    username = db.Column(db.String)
+    
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
+
+    _password_hash = db.Column(db.String)
+    admin = db.Column(db.String, default=False)
+
+    @hybrid_property
+    def password_hash(self):
+        return self._password_hash
+
+    @password_hash.setter
+    def password_hash(self, password):
+        password_hash = bcrypt.generate_password_hash(password.encode('utf-8'))
+        self._password_hash = password_hash.decode('utf-8')
     
+    def authenticate(self, password):
+        return bcrypt.check_password_hash(self._password_hash, password.encode('utf-8'))
+
     friends = db.relationship('Friend', backref = 'user')
     posts = db.relationship('Post', backref='post')
     comments = db.relationship('Comment', backref = 'user')
 
     post_id = db.Column(db.Integer, db.ForeignKey('posts.id'))
-
 
     serialize_rules = ('-post.users',)
 
@@ -32,7 +54,7 @@ class User(db.Model, SerializerMixin):
         return value
 
     def __repr__(self):
-        return f'<User {self.name}>'
+        return f'User: {self.id}, Name {self.name}, Email: {self.email}, Admin: {self.admin}'
 
 class Friend(db.Model, SerializerMixin):
     __tablename__ = 'friends'

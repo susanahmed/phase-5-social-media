@@ -1,19 +1,78 @@
 from flask import request, make_response
 from flask_restful import Resource
-
-# Local imports
+from flask_bcrypt import Bcrypt
 from config import app, db, api
+from flask_cors import CORS
 from models import User, Friend, Message, Post, Comment
 
-class User(Resource):
-    def get(self):
-        user_dicts = [user.to_dict() for user in User.query.all()]
+app = Flask(__name__)
+bcrypt = Bcrypt(app)
+CORS(app)
+api = API(app)
 
-        return make_response(
-            user_dicts,
-            200
+
+class Signup(Resource):
+    def post(self):
+        form_json = request.get_json()
+        new_user = User(name = form_json['name'], email=form_json[email], username=form_json[username])
+        new_user.password_hash = form_json['password']
+
+        db.session.add(new_user)
+        db.session.commit()
+
+        response = make_response(
+            new_user.to_dict(),
+            201
         )
-api.add_resource(User, '/user')
+        return response 
+api.add_resource(Signup, '/signup')
+
+class Login(Resource):
+    def post(self):
+        try:
+            user= User.query.filter_by(name=request.get_json()['name']).first()
+            if user.authenticate(request.get_json()['password']):
+                session['user_id'] = user.id
+                response = make_response(
+                    user.to_dict(),
+                    200
+                )
+                return response
+        except: 
+            abort(401, "Incorrect Username or Password")
+
+api.add_resource(Login, '/login')
+
+class AuthorizedSession(Resource):
+    def get(self):
+        try:
+            user = User.query.filter_by(id=session['user_id']).first()
+            response = make_response(
+                user.to_dict(),
+                200
+            )
+            return response
+        except:
+            abort(401, "Unauthorized")
+
+api.add_resource(AuthorizedSession, '/authorized')
+
+class Logout(Resource):
+    def delete(self):
+        session['user_id'] = None 
+        response = make_response('',204)
+        return response
+api.add_resource(Logout, '/logout')
+
+@app.errorhandler(NotFound)
+def handle_not_found(e):
+    response = make_response(
+        "Sorry, Not Found",
+        404
+    )
+
+    return response
+
 
 class Posts(Resource):
     def get(self):
