@@ -1,20 +1,19 @@
 import React, {useEffect, useState} from 'react'
 import { Route, Switch } from 'react-router-dom'
 import {createGlobalStyle} from 'styled-components'
-import LoginForm from './LoginForm'
 import SignupForm from './SignupForm'
 import Home from './Home'
-import MessageForm from './MessageForm'
 import Navigation from './NavBar'
 import PostCard from './PostCard'
 import PostContainer from './PostContainer'
 import PostForm from './PostForm'
-import EditPostForm from './EditPostForm'
 import Profile from './Profile'
 import PostCont from './PostCont'
 import Authentication from './SignupForm'
 import Feed from './Feed'
 import '../index.css'
+import PostDetail from './PostDetail'
+import EditPostForm from './EditPostForm'
 
 function App(){
     const [posts, setPosts] = useState([])
@@ -34,7 +33,7 @@ function App(){
     console.log(posts)
 
     const fetchUser = () => (
-    fetch('authorized')
+    fetch('/authorized')
     .then(res => {
         if(res.ok){
             res.json()
@@ -47,7 +46,7 @@ function App(){
     })
     )
 
-    const updateUser = (user) => setUser(user)
+    // const updateUser = (user) => setUser(user)
     // if(!user) return (
     //     <>
     //     <Authentication updateUser={updateUser} />
@@ -56,72 +55,62 @@ function App(){
 
     function handleDelete(id) {
         fetch(`/posts/${id}`, {
-          method: 'DELETE',
-          headers: { 'Content-Type': 'application/json' }
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' }
         })
-          .then(() => setRefresh(!refresh))
-      }
+        .then(() => setRefresh(!refresh))
+    }
 
-      function addPost(post) {
-        setPosts([post, ...posts]);
-      }
+    function addPost(post) {
+    setPosts([post, ...posts]);
+    }
+
+    function updatePost(updatedPost){
+        const updatedPosts = posts.map(post => {
+            if (post.id === updatePost.id)
+            return updatedPost;
+            else
+            return post;
+        })
+        setPosts(updatedPosts);
+        setRefresh(!refresh);
+    }
 
     return(
         <>
         <GlobalStyle />
-        <Navigation updateUser={updateUser}/>
+        <Navigation />
+        {/* <Navigation updateUser={updateUser}/> */}
           <Switch>
-            {/* <Route path='/productions/new'>
-              <ProductionForm addProduction={addProduction}/>
-            </Route> */}
             <Route path='/posts/:id'>
-                <PostCard />
+              <PostDetail post = {posts}/>
             </Route>
-            <Route path= '/newposts'>
+            <Route path= '/posts'>
                 <PostForm addPost={addPost} />
             </Route>
             {/* <Route exact path='/authentication'>
               <Authentication updateUser={updateUser}/>
             </Route> */}
             <Route exact path='/profile'>
-              <Profile posts={posts} addPost={addPost}/>
+              <Profile posts={posts} />
             </Route>
             <Route path = '/posts'>
-              <PostCont posts={posts} addPost={addPost}/>
+              <PostCont posts={posts} />
             </Route>
             <Route path = '/home'>
                 <h1>WELCOME TO TECHBOOK</h1>
             </Route>
             <Route path= '/feed'>
-                <Feed posts = {posts}/>
+                <Feed posts = {posts} handleDelete={handleDelete}/>
+            </Route>
+            <Route path= '/posts/:id/edit'>
+                <EditPostForm updatePost = {updatePost}/>
             </Route>
           </Switch>
         </>
       )
     }
-    //     <div className='background'>
-    //     <Profile />
-    //             <Switch>
-    //             <Route path='/posts'>
-    //                 <PostCont posts={posts} handleDelete={handleDelete}/>
-    //             </Route>
-    //             {/* <Route path='/posts'>
-    //                 <IndividualPlaylist songs={songs} setRefresh={setRefresh} refresh={refresh} />
-    //             </Route>
-    //             <Route path='/playlists'>
-    //                 <Playlists playlists={playlists} setRefresh={setRefresh} refresh={refresh} />
-    //             </Route>
-    //             <Route path='/songs/:id/edit'>
-    //                 <EditSongForm updateSong={updateSong} />
-    //             </Route>
-    //             <Route path='/songs'>
-    //                 <AllSongs songs={songs} handleDelete={handleDelete} />
-    //             </Route> */}
-
-    //             </Switch>
-    //     </div>
-    // )
-    //         }
+ 
 export default App
 
 const GlobalStyle = createGlobalStyle`

@@ -2,7 +2,7 @@ import './Feed.css'
 import Post from "./Post"
 import PostCont from "./PostCont"
 
-function Feed({posts}) {
+function Feed({posts, handleDelete}) {
     return (
         <>
         <div className="feed">
@@ -10,7 +10,7 @@ function Feed({posts}) {
         {/* {posts?.map((p) => (
           <Post key={p.id} post={p} />
         ))} */}
-        <PostCont posts={posts}/>
+        <PostCont posts={posts} handleDelete={handleDelete}/>
       </div>
     </div>
         </>

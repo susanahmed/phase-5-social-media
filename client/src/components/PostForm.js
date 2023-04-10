@@ -4,22 +4,26 @@ import styled from 'styled-components'
 import { useHistory } from 'react-router-dom'
 import { useFormik } from "formik"
 import * as yup from "yup"
+import './PostForm.css'
+import { Icon, Button } from "semantic-ui-react"
 
 function PostForm({addPost}) {
     const history = useHistory()
     const formSchema = yup.object().shape({
         text: yup.string().required("Must enter text"),
-        file: yup.string()
+        file: yup.string(),
+        description: yup.string()
     })
 
     const formik = useFormik({
-        initialValues: {
+        initialValues:{
             text: '',
             file: '',
+            description: ''
         },
 
         validationSchema: formSchema, 
-        onSubmit: (values) => {
+        onSubmit:(values) => {
             fetch("/posts", {
                 method: "POST",
                 headers: {
@@ -36,8 +40,10 @@ function PostForm({addPost}) {
             })
         }
     })
+    console.log(formik)
     return(
-        <div className='App'>
+        <div className='share'>
+
             <Form onSubmit = {formik.handleSubmit}>
                 <label>Text</label>
                 <br />
@@ -51,6 +57,7 @@ function PostForm({addPost}) {
 
             </Form>
         </div>
+
     )
 }
 

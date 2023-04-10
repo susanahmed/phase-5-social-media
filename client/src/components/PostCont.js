@@ -1,21 +1,18 @@
 import styled from 'styled-components'
 import PostCard from './PostCard'
+import './PostCard.css'
 
 
-function PostCont({posts}) {
+function PostCont({posts, handleDelete}) {
 console.log(posts)
     return (
-     <div className='background'>
-         {/* <CardContainer> */}
+     <div className='feed'>
+        <div className="feedWrapper">
              {posts?.map(post => <PostCard  key={post.id} post={post}  />)}
-         {/* </CardContainer> */}
+    </div>
      </div>
     )
   }
   
 export default PostCont
 
-// const CardContainer = styled.ul`
-//     display:flex;
-//     flex-direction:column;
-// `

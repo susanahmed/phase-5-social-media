@@ -38,7 +38,7 @@ function Authentication({updateUser}) {
                 history.push('/')
               })
             } else {
-              //15.2 render the error if the user's authentication fails
+              
               res.json().then(error => setError(error.message))
             }
           })

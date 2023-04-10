@@ -1,44 +1,53 @@
-
+import React, {useState} from 'react'
 import {Link} from 'react-router-dom'
-import styled from 'styled-components'
+// import styled from 'styled-components'
+import './PostCard.css'
+import { Icon, List, Pagination, Button, Container } from "semantic-ui-react"
 
-function PostCard({post}){
-    const {file, id} = post
+
+function PostCard({post, updatePost, handleDelete}) {
+    const {id, file, description} = post
+    const [like,setLike] = useState(post.like)
+    const [isLiked,setIsLiked] = useState(false)
+
+    const likeHandler=() => {
+      setLike(isLiked ? like-1 : like+1)
+      setIsLiked(!isLiked)
+    }
+
     return (
-        // <Card id={id}>
-            <Link to = {`/posts/${id}`}>
-                <div>
-                    <p>{file}</p>
-                    <img src = "https://techresearchonline.com/wp-content/uploads/2022/08/Zetaplus-%F0%9F%87%B9%F0%9F%87%AC-on-Twitter.webp" />
-                </div>
-            </Link>
-            // {/* </Card> */}
+      <div id={id} className = 'post'>
+        <div className = 'postWrapper'>
+            <div className = 'postTop'>
+                <div className = 'postTopLeft'>
+                  <span className="postDate">{post.created_at}</span>
+        <Link to={`/posts/${id}`}> 
+            <h2>{file}</h2>
+            <h2>{description}</h2>
+            <h1>THIS IS THE POST</h1>        
+        </Link>
+        <Link to={`posts/${post.id}/edit`}> </Link>
+          <div className="postBottom">
+            <div className="postBottomLeft">
+              <Button icon onClick={likeHandler}>
+              <Icon name= 'heart' size='small' />
+              </Button>
+          <Button icon onClick = {() => updatePost={updatePost}}>
+            <Icon name='edit' size="small" />
+          </Button>
+          <Button icon onClick={() => handleDelete={handleDelete}}>
+              <Icon name='trash alternate' size="small" />
+          </Button>
+       </div>
+       <div className="postBottomRight">
+        <span className="postCommentText">{post.comment} comments </span>
+       </div>
+        </div>
+        </div>
+      </div>
+     </div>
+     </div>
     )
-}
-
-export default PostCard
-
-// const Card = styled.li`
-// display:flex;
-// flex-direction:row;
-// justify-content:start;
-// font-family:Arial, sans-serif;
-// margin:5px;
-// &:hover {
-//   transform: scale(1.15);
-//   transform-origin: top left;
-// }
-// a{
-//   text-decoration:none;
-//   color:white;
-// }
-// img{
-//   width: 180px;
-//   margin-left:50%;
-//   mask-image: linear-gradient(to left, rgba(0, 0, 0, .9) 80%, transparent 100%);
-// }
-// position:relative;
-// div{
-//  position:absolute;
-// }
-// `
+  }
+  
+  export default PostCard

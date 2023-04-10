@@ -38,7 +38,6 @@ function Profile({posts}, {addPost}) {
             {/* <PostCont /> */}
             <PostForm />
             <div>
-              <button onClick={handleClick}>Add Post</button>
               <PostCont posts={posts} addPost={addPost}/>
             </div>
             

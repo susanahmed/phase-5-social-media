@@ -11,7 +11,7 @@ from models import User, Friend, Message, Post, Comment
 class Signup(Resource):
     def post(self):
         form_json = request.get_json()
-        new_user = User(name = form_json['name'], email=form_json[email], username=form_json[username])
+        new_user = User(name = form_json['name'], email=form_json['email'], username=form_json['username'])
         new_user.password_hash = form_json['password']
 
         db.session.add(new_user)
@@ -83,7 +83,7 @@ class Posts(Resource):
         new_post = Post(
             description=request.get_json()['description'],
             file=request.get_json()['file'],
-            likes = request.get_json()['likes']
+            # likes = request.get_json()['likes']
         )
 
         db.session.add(new_post)
