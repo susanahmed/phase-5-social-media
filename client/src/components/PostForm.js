@@ -10,16 +10,16 @@ import { Icon, Button } from "semantic-ui-react"
 function PostForm({addPost}) {
     const history = useHistory()
     const formSchema = yup.object().shape({
-        text: yup.string().required("Must enter text"),
+        title: yup.string().required("Must enter text"),
         file: yup.string(),
         description: yup.string()
     })
 
     const formik = useFormik({
         initialValues:{
-            text: '',
+            title: '',
             file: '',
-            description: ''
+            description: '',
         },
 
         validationSchema: formSchema, 
@@ -45,16 +45,19 @@ function PostForm({addPost}) {
         <div className='share'>
 
             <Form onSubmit = {formik.handleSubmit}>
-                <label>Text</label>
+                <label>Title</label>
                 <br />
-                <input type = 'text' name = 'text' value={formik.values.text} onChange={formik.handleChange} />
+                <input type = 'text' name = 'title' value={formik.values.title} onChange={formik.handleChange} />
                 <br />
-                <label>Content</label>
+                <label>File</label>
                 <br />
                 <input type = 'text' name = 'file' value={formik.values.file} onChange={formik.handleChange} />
+                <br />
+                <label>Description</label>
+                <br />
+                <input type = 'text' name = 'description' value={formik.values.description} onChange={formik.handleChange} />
 
                 <input type = 'submit' />
-
             </Form>
         </div>
 

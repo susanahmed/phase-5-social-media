@@ -3,42 +3,59 @@ from flask_restful import Resource, Api
 from flask_bcrypt import Bcrypt
 from config import app, db, api
 from werkzeug.exceptions import NotFound, Unauthorized
+from sqlalchemy.exc import IntegrityError
 
 bcrypt = Bcrypt(app)
 
 from models import User, Friend, Message, Post, Comment
 
+app.secret_key = b'@~xH\xf2\x10k\x07hp\x85\xa6N\xde\xd4\xcd'
+
 class Signup(Resource):
     def post(self):
-        form_json = request.get_json()
-        new_user = User(name = form_json['name'], email=form_json['email'], username=form_json['username'])
-        new_user.password_hash = form_json['password']
+        request_json = request.get_json()
 
-        db.session.add(new_user)
+        username = request_json.get('username')
+        password = request_json.get('password')
+        image_url = request_json.get('image_url')
+        bio = request_json.get('bio')
+
+        user = User(
+            username=username,
+            image_url=image_url,
+            bio=bio
+        )
+        user.password_hash = password
+
+        db.session.add(user)
         db.session.commit()
 
         response = make_response(
-            new_user.to_dict(),
+            user.to_dict(),
             201
         )
         return response 
-api.add_resource(Signup, '/signup')
+api.add_resource(Signup, '/signup', endpoint='signup')
 
 class Login(Resource):
     def post(self):
-        try:
-            user= User.query.filter_by(name=request.get_json()['name']).first()
-            if user.authenticate(request.get_json()['password']):
-                session['user_id'] = user.id
+        request_json = request.get_json()
+
+        username = request_json.get('username')
+        password = request_json.get('password')
+
+        user = User.query.filter(User.username == username).first()
+        if user:
+                if user.authenticate(password):
+                    session['user_id'] = user.id
                 response = make_response(
                     user.to_dict(),
                     200
                 )
                 return response
-        except: 
-            abort(401, "Incorrect Username or Password")
+        return {'error': '401 Unauthorized'}, 401
 
-api.add_resource(Login, '/login')
+api.add_resource(Login, '/login', endpoint='login')
 
 class AuthorizedSession(Resource):
     def get(self):
@@ -52,24 +69,18 @@ class AuthorizedSession(Resource):
         except:
             abort(401, "Unauthorized")
 
-api.add_resource(AuthorizedSession, '/authorized')
+api.add_resource(AuthorizedSession, '/authorized', endpoint='authorized')
 
 class Logout(Resource):
     def delete(self):
-        session['user_id'] = None 
-        response = make_response('',204)
-        return response
-api.add_resource(Logout, '/logout')
-
-@app.errorhandler(NotFound)
-def handle_not_found(e):
-    response = make_response(
-        "Sorry, Not Found",
-        404
-    )
-
-    return response
-
+        if session.get('user_id'):
+            
+            session['user_id'] = None
+            
+            return {}, 204
+        
+        return {'error': '401 Unauthorized'}, 401
+api.add_resource(Logout, '/logout', endpoint='logout')
 
 class Posts(Resource):
     def get(self):

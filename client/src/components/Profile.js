@@ -1,10 +1,12 @@
 import './Profile.css'
 import PostCont from './PostCont'
 import PostForm from './PostForm'
-import {useState} from "react"
+import {useState, useEffect} from "react"
 
-function Profile({posts}, {addPost}) {
+function Profile({posts, addPost, user, setUser}) {
+  console.log(user)
   const [toggle, setToggle] = useState(false)
+  // const {id, username, image_url, bio} = user
 
   const handleClick = () => {
     setToggle(!toggle);
@@ -23,13 +25,13 @@ function Profile({posts}, {addPost}) {
               />
               <img
                 className="profileUserImg"
-                src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/User-avatar.svg/2048px-User-avatar.svg.png"
+                src={user.image_url}
                 alt=""
               />
             </div>
             <div className="profileInfo">
-                <h4 className="profileInfoName">Susan Ahmed</h4>
-                <span className="profileInfoDesc">Hello there!</span>
+                <h4 className="profileInfoName">{user.username}</h4>
+                <span className="profileInfoDesc">{user.bio}</span>
             </div>
           </div>
           {/* <div className="profileRightBottom"> */}

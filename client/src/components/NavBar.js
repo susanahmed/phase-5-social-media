@@ -2,8 +2,19 @@ import {Link} from 'react-router-dom'
 import { BsFillPersonFill, BsBellFill } from 'react-icons/bs'
 import { BiMessageAltDetail, BiSearchAlt } from 'react-icons/bi'
 import './NavBar.css'
+import {RiLogoutBoxRFill} from 'react-icons/ri'
+import Profile from './Profile'
 
-function Navigation() {
+function Navigation({user, setUser}) {
+console.log(user)
+  function handleLogoutClick() {
+    fetch("/logout", { method: "DELETE" }).then((r) => {
+      if (r.ok) {
+        setUser(null);
+      }
+    });
+  }
+
     return(
         <>
         <div className="topbarContainer">
@@ -26,7 +37,7 @@ function Navigation() {
         </div>
         <div className="topbarIcons">
           <div className="topbarIconItem">
-            <BsFillPersonFill />
+            <BsFillPersonFill/>
             {/* <span className="topbarIconBadge">0</span> */}
           </div>
           <div className="topbarIconItem">
@@ -38,8 +49,13 @@ function Navigation() {
             {/* <span className="topbarIconBadge">0</span> */}
           </div>
         </div>
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/User-avatar.svg/2048px-User-avatar.svg.png" alt="" className="topbarImg"/>
+        <Link to= './profile'><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/User-avatar.svg/2048px-User-avatar.svg.png" alt="" className="topbarImg"/>
+      </Link>
       </div>
+      <div className="topbarIconItem">
+      <RiLogoutBoxRFill onClick={handleLogoutClick}/>
+      </div>
+       
     </div>
         </>
     )

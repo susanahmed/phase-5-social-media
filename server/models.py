@@ -14,18 +14,15 @@ class User(db.Model, SerializerMixin):
     __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True)
 
-    name = db.Column(db.String, nullable=False)
-    email = db.Column(db.String)
     username = db.Column(db.String)
-    location = db.Column(db.String, nullable=False)
     bio = db.Column(db.String)
-    image = db.Column(db.String, nullable=False)
+    image_url = db.Column(db.String, nullable=False)
     
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
 
     _password_hash = db.Column(db.String)
-    admin = db.Column(db.String, default=False)
+
 
     @hybrid_property
     def password_hash(self):
@@ -40,12 +37,10 @@ class User(db.Model, SerializerMixin):
         return bcrypt.check_password_hash(self._password_hash, password.encode('utf-8'))
 
     friends = db.relationship('Friend', backref = 'user')
-    posts = db.relationship('Post', backref='post')
+    posts = db.relationship('Post', backref='user')
     comments = db.relationship('Comment', backref = 'user')
 
-    post_id = db.Column(db.Integer, db.ForeignKey('posts.id'))
-
-    serialize_rules = ('-post.users',)
+    serialize_rules = ('-post.users','-_password_hash',)
 
     @validates('name')
     def validates_name(self, key, value):
@@ -78,6 +73,7 @@ class Post(db.Model, SerializerMixin):
     __tablename__ = 'posts'
     id = db.Column(db.Integer, primary_key=True)
 
+    title = db.Column(db.String)
     description = db.Column(db.String)
     file = db.Column(db.String)
     likes = db.Column(db.Integer)
@@ -85,7 +81,7 @@ class Post(db.Model, SerializerMixin):
     created_at = db.Column(db.DateTime, server_default = db.func.now())
     updated_at = db.Column(db.DateTime, onupdate = db.func.now())
 
-    user_id = db.relationship('User', backref= 'post')
+    user_id = db.Column(db.Integer(), db.ForeignKey('users.id'))
     serialize_rules= ('-users.post',)
 
     @validates('text')

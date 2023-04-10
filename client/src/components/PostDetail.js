@@ -5,12 +5,13 @@ import {Link} from 'react-router-dom'
 import PostCard from './PostCard'
 
 function PostDetail({post}){
-    const {id, file, description} = post
+  console.log(post)
+    const {id, title, description, file, likes, comments} = post
  
     return (
       <>
       <Link to={`/posts/${id}`}> 
-      <PostCard  key={post.id} post={post} />
+      <PostCard  key={post.id} post={post}/>
       </Link>
       </>
 

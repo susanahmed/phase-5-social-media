@@ -1,8 +1,10 @@
 import React, {useEffect, useState} from 'react'
 import { Route, Switch } from 'react-router-dom'
 import {createGlobalStyle} from 'styled-components'
-import SignupForm from './SignupForm'
 import Home from './Home'
+import SignupForm from './SignupForm'
+import LoginForm from './LoginForm'
+import Login from './Login'
 import Navigation from './NavBar'
 import PostCard from './PostCard'
 import PostContainer from './PostContainer'
@@ -18,10 +20,10 @@ import EditPostForm from './EditPostForm'
 function App(){
     const [posts, setPosts] = useState([])
     const [refresh, setRefresh] = useState(false)
-    const [user, setUser] = useState(null)
+    const [user, setUser] = useState(null) 
 
     useEffect(() => {
-        fetchUser()
+        fetchSession()
         fetchPosts()
     },[]) 
 
@@ -32,26 +34,35 @@ function App(){
     )
     console.log(posts)
 
-    const fetchUser = () => (
-    fetch('/authorized')
-    .then(res => {
-        if(res.ok){
-            res.json()
-            .then(data => {
-                setUser(data)
-            })
-        } else {
-            setUser(null)
-        }
-    })
-    )
-
-    // const updateUser = (user) => setUser(user)
-    // if(!user) return (
-    //     <>
-    //     <Authentication updateUser={updateUser} />
-    //     </>
+    // const fetchUser = () => (
+    // fetch('/authorized')
+    // .then(res => {
+    //     if(res.ok){
+    //         res.json()
+    //         .then(data => {
+    //             setUser(data)
+    //         })
+    //     } else {
+    //         setUser(null)
+    //     }
+    // })
     // )
+    const fetchSession = () => (
+      fetch("/authorized")
+      .then((r) => {
+        if (r.ok) {
+          r.json()
+          .then((user) => {
+            setUser(user)
+        })
+      } else {
+        setUser(null)
+    }
+  })
+    )
+  
+  
+    if (!user) return <Login onLogin={setUser} />;
 
     function handleDelete(id) {
         fetch(`/posts/${id}`, {
@@ -79,10 +90,13 @@ function App(){
     return(
         <>
         <GlobalStyle />
-        <Navigation />
+        <Navigation user={user} setUser={setUser}/>
         {/* <Navigation updateUser={updateUser}/> */}
           <Switch>
-            <Route path='/posts/:id'>
+          <Route path='/home'>
+              <Home />
+            </Route>
+          <Route path='/posts/:id'>
               <PostDetail post = {posts}/>
             </Route>
             <Route path= '/posts'>
@@ -92,13 +106,13 @@ function App(){
               <Authentication updateUser={updateUser}/>
             </Route> */}
             <Route exact path='/profile'>
-              <Profile posts={posts} />
+              <Profile posts={posts} user={user} setUser={setUser}/>
             </Route>
             <Route path = '/posts'>
-              <PostCont posts={posts} />
+              <PostCont posts={posts} handleDelete={handleDelete}/>
             </Route>
-            <Route path = '/home'>
-                <h1>WELCOME TO TECHBOOK</h1>
+            <Route path = '/login'>
+                <Login />
             </Route>
             <Route path= '/feed'>
                 <Feed posts = {posts} handleDelete={handleDelete}/>
@@ -110,7 +124,7 @@ function App(){
         </>
       )
     }
- 
+
 export default App
 
 const GlobalStyle = createGlobalStyle`

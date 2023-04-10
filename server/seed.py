@@ -25,25 +25,33 @@ if __name__ == '__main__':
         print("SEED!")
 
 
-        # users = []
-        # for i in range(100):
-        #     new_user = User(
-        #         name=fake.name(),
-        #         location=fake.word(),
-        #         bio = fake.sentence(),
-        #         image = "https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/User-avatar.svg/2048px-User-avatar.svg.png",
-        #         username = fake.name()
-        #     )
-        #     users.append(new_user)
-        # db.session.add_all(users)
-        # db.session.commit()
+        users = []
+        usernames =[]
+
+        for i in range(100):
+            username = fake.first_name()
+            while username in usernames:
+                username = fake.first_name()
+            usernames.append(username)
+
+            user = User(
+                username=username,
+                bio = fake.paragraph(nb_sentences=3),
+                image_url = fake.url(),
+            )
+            user.password_hash = user.username + 'password'
+
+            users.append(user)
+
+        db.session.add_all(users)
+        db.session.commit()
 
         posts = []
-        for i in range(10):
+        for i in range(100):
             post = Post(
-                text= fake.word(),
+                title= fake.word(),
                 description = fake.sentence(),
-                file = "https://techresearchonline.com/wp-content/uploads/2022/08/Zetaplus-%F0%9F%87%B9%F0%9F%87%AC-on-Twitter.webp",
+                file = fake.url(),
                 likes = 0,
 
             )
