@@ -1,19 +1,30 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import {Link} from 'react-router-dom'
-// import styled from 'styled-components'
 import './PostCard.css'
-import { Icon, List, Pagination, Button, Container } from "semantic-ui-react"
+import { Icon, Button } from "semantic-ui-react"
 
 
-function PostCard({post, updatePost, handleDelete}) {
-    const {id, title, description, file, likes, comments} = post
-    const [like,setLike] = useState(post.like)
-    const [isLiked,setIsLiked] = useState(false)
+function PostCard({post, updatePost}) {
+    const {id, title, description, file, likes} = post
+    const [refresh, setRefresh] = useState(false)
+    const [likesCount, setLikesCount] = useState(post.likes)
+    const [comments, setComments] = useState([])
 
-    const likeHandler=() => {
-      setLike(isLiked ? post.likes-1 : post.likes+1)
-      setIsLiked(!isLiked)
-    }
+    useEffect(() => {
+      fetch('/comments')
+        .then(r => r.json())
+        .then(data => setComments(data))
+    })
+
+    function handleDelete(id) {
+      fetch(`/posts/${id}`, {
+      method: 'DELETE',
+      headers: { 
+        'Accept': 'application/json',
+        'Content-Type': 'application/json', }
+      })
+      .then(() => setRefresh(!refresh))
+  }
     
     return (
       <div id={id} className = 'post'>
@@ -25,24 +36,26 @@ function PostCard({post, updatePost, handleDelete}) {
             <h3>Title: {post.title}</h3>
             <h2>Description: {post. description}</h2>  
             <h1>{post.file}</h1>
-            <h4>Likes: {post.likes}</h4>
-            <h4>Comments: {post.comments}</h4>
+            <h4>Likes: {likesCount}</h4>
+            <h4>Comments: {comments}</h4>
         </Link>
-        <Link to={`posts/${post.id}/edit`}> </Link>
           <div className="postBottom">
             <div className="postBottomLeft">
-              <Button icon onClick={likeHandler}>
+              <Button icon onClick={() => setLikesCount
+              (likesCount + 1)}>
               <Icon name= 'heart' size='small' />
               </Button>
-          <Button icon onClick = {() => updatePost={updatePost}}>
+              <Link to={`posts/${post.id}/edit`}> 
+          <Button icon >
             <Icon name='edit' size="small" />
           </Button>
-          <Button icon onClick={() => handleDelete(post.id)}>
+                </Link>
+          <Button icon onClick={() => handleDelete(id)}>
               <Icon name='trash alternate' size="small" />
           </Button>
        </div>
        <div className="postBottomRight">
-        <span className="postCommentText">{post.comment} comments </span>
+        <span className="postCommentText">{comments} comments </span>
        </div>
         </div>
         </div>

@@ -17,6 +17,8 @@ class User(db.Model, SerializerMixin):
     username = db.Column(db.String)
     bio = db.Column(db.String)
     image_url = db.Column(db.String, nullable=False)
+    background_url=db.Column(db.String)
+    location = db.Column(db.String)
     
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())

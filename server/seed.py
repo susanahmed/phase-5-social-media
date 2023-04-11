@@ -5,6 +5,8 @@ from random import randint, choice as rc
 from faker import Faker
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
+import random
+from random import randint
 
 # Local imports
 from app import app
@@ -38,6 +40,8 @@ if __name__ == '__main__':
                 username=username,
                 bio = fake.paragraph(nb_sentences=3),
                 image_url = fake.url(),
+                background_url = fake.url(),
+                location = fake.word()
             )
             user.password_hash = user.username + 'password'
 
@@ -52,9 +56,18 @@ if __name__ == '__main__':
                 title= fake.word(),
                 description = fake.sentence(),
                 file = fake.url(),
-                likes = 0,
+                likes = random.randint(1, 3000),
 
             )
             posts.append(post)
         db.session.add_all(posts)
+        db.session.commit()
+
+        comments = []
+        for i in range(10):
+            comment = Comment(
+                content = fake.sentence(),
+            )
+            comments.append(comment)
+        db.session.add_all(comments)
         db.session.commit()

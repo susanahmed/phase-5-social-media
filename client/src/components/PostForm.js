@@ -40,7 +40,6 @@ function PostForm({addPost}) {
             })
         }
     })
-    console.log(formik)
     return(
         <div className='share'>
 

@@ -57,13 +57,17 @@ function EditPostForm({updatePost}) {
     return(
         <div className='App'>
             <Form onSubmit = {formik.handleSubmit}>
-                <label>Text</label>
+            <label>Title</label>
                 <br />
-                <input type = 'text' name = 'text' value={formik.values.text} onChange={formik.handleChange} />
+                <input type = 'text' name = 'title' value={formik.values.title} onChange={formik.handleChange} />
                 <br />
-                <label>Content</label>
+                <label>File</label>
                 <br />
                 <input type = 'text' name = 'file' value={formik.values.file} onChange={formik.handleChange} />
+                <br />
+                <label>Description</label>
+                <br />
+                <input type = 'text' name = 'description' value={formik.values.description} onChange={formik.handleChange} />
 
                 <input type = 'submit' />
 
