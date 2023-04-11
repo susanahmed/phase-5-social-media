@@ -20,6 +20,7 @@ if __name__ == '__main__':
 
     session.query(User).delete()
     session.query(Post).delete()
+    session.query(Comment).delete()
     session.commit()
 
     with app.app_context():
@@ -66,7 +67,7 @@ if __name__ == '__main__':
         comments = []
         for i in range(10):
             comment = Comment(
-                content = fake.sentence(),
+                comment = fake.sentence(),
             )
             comments.append(comment)
         db.session.add_all(comments)

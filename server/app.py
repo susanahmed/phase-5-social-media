@@ -150,6 +150,95 @@ class PostByID(Resource):
         return response
 api.add_resource(PostByID, '/posts/<int:id>')
 
+class Users(Resource):
+    def get(self):
+        user_dicts = [user.to_dict() for user in User.query.all()]
+        return make_response(
+            user_dicts,
+            200,
+        )
+api.add_resource(Users, '/users')
+
+class UserByID(Resource):
+    def get(self,id):
+        user = User.query.filter_by(id=id).first()
+        if not user:
+            raise NotFound
+        user_dict = user.to_dict()
+        response = make_response(
+            user_dict,
+            200
+        )
+        
+        return response
+api.add_resource(UserByID, '/user/<int:id>')
+
+class Comments(Resource):
+     def get(self):
+        comment_dicts = [comment.to_dict() for comment in Comment.query.all()]
+        return make_response(
+            comment_dicts,
+            200,
+        )
+
+     def post(self):
+        comment = Comment(
+            comment =request.get_json()['comment']
+        )
+
+        db.session.add(comment)
+        db.session.commit()
+
+        return make_response(
+            comment.to_dict(),
+            201
+        )
+api.add_resource(Comments, '/comments')
+
+class CommentsByID(Resource):
+    def get(self,id):
+        comment = Comment.query.filter_by(id=id).first()
+        if not comment:
+            raise NotFound
+        comment_dict = comment.to_dict()
+        response = make_response(
+            comment_dict,
+            200
+        )
+        
+        return response
+
+    def patch(self, id):
+        comment = Comment.query.filter_by(id=id).first()
+        if not comment:
+            raise NotFound
+
+        for attr in request.form:
+            setattr(comment, attr, request.form[attr])
+
+        db.session.add(comment)
+        db.session.commit()
+
+        comment_dict = comment.to_dict()
+        
+        response = make_response(
+            comment_dict,
+            200
+        )
+        return response
+
+    def delete(self, id):
+        comment = Comment.query.filter_by(id=id).first()
+        if not comment:
+            raise NotFound
+        db.session.delete(comment)
+        db.session.commit()
+
+        response = make_response('', 204)
+        
+        return response
+api.add_resource(CommentsByID, '/comments/<int:id>')
+
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)

@@ -5,6 +5,7 @@ import './PostCard.css'
 
 function PostCont({posts, handleDelete}) {
 console.log(posts)
+
     return (
      <div className='feed'>
         <div className="feedWrapper">

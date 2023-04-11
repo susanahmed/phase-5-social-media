@@ -96,7 +96,7 @@ class Comment(db.Model, SerializerMixin):
     __tablename__ = 'comments'
     id = db.Column(db.Integer, primary_key=True)
 
-    content = db.Column(db.String)
+    comment = db.Column(db.String)
     created_at = db.Column(db.DateTime, server_default = db.func.now())
     updated_at = db.Column(db.DateTime, onupdate = db.func.now())
 
@@ -105,10 +105,10 @@ class Comment(db.Model, SerializerMixin):
 
     serialize_rules = ('-user.comments', '-post.comments')
 
-    @validates('content')
-    def validates_content(self, key, content):
-        if len(content) < 1:
-            raise ValueError("Comment must be valid!")
-            return content
+    # @validates('content')
+    # def validates_content(self, key, content):
+    #     if len(content) < 1:
+    #         raise ValueError("Comment must be valid!")
+    #         return content
 
 

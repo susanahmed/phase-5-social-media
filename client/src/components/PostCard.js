@@ -4,17 +4,12 @@ import './PostCard.css'
 import { Icon, Button } from "semantic-ui-react"
 
 
+
 function PostCard({post, updatePost}) {
     const {id, title, description, file, likes} = post
     const [refresh, setRefresh] = useState(false)
     const [likesCount, setLikesCount] = useState(post.likes)
-    const [comments, setComments] = useState([])
 
-    useEffect(() => {
-      fetch('/comments')
-        .then(r => r.json())
-        .then(data => setComments(data))
-    })
 
     function handleDelete(id) {
       fetch(`/posts/${id}`, {
@@ -37,7 +32,6 @@ function PostCard({post, updatePost}) {
             <h2>Description: {post. description}</h2>  
             <h1>{post.file}</h1>
             <h4>Likes: {likesCount}</h4>
-            <h4>Comments: {comments}</h4>
         </Link>
           <div className="postBottom">
             <div className="postBottomLeft">
@@ -53,9 +47,13 @@ function PostCard({post, updatePost}) {
           <Button icon onClick={() => handleDelete(id)}>
               <Icon name='trash alternate' size="small" />
           </Button>
+          <Link to= '/comments'> 
+          <Button icon >
+            <Icon name='comments' size="small" />
+          </Button>
+                </Link>
        </div>
        <div className="postBottomRight">
-        <span className="postCommentText">{comments} comments </span>
        </div>
         </div>
         </div>

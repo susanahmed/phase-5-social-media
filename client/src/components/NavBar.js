@@ -3,7 +3,9 @@ import { BsFillPersonFill, BsBellFill } from 'react-icons/bs'
 import { BiMessageAltDetail, BiSearchAlt } from 'react-icons/bi'
 import './NavBar.css'
 import {RiLogoutBoxRFill} from 'react-icons/ri'
+import {FaUserFriends} from 'react-icons/fa'
 import Profile from './Profile'
+import Users from './Users'
 
 function Navigation({user, setUser}) {
 console.log(user)
@@ -36,17 +38,18 @@ console.log(user)
           <span className="topbarLink"><Link to='/feed'>Timeline</Link></span>
         </div>
         <div className="topbarIcons">
+          <Link to='/users'>
           <div className="topbarIconItem">
-            <BsFillPersonFill/>
-            {/* <span className="topbarIconBadge">0</span> */}
+            <FaUserFriends />
           </div>
+          </Link>
+          <Link to='/comments'>
           <div className="topbarIconItem">
-            <BiMessageAltDetail />
-            {/* <span className="topbarIconBadge">0</span> */}
+            <BiMessageAltDetail /> 
           </div>
+          </Link>
           <div className="topbarIconItem">
             <BsBellFill />
-            {/* <span className="topbarIconBadge">0</span> */}
           </div>
         </div>
         <Link to= './profile'><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/User-avatar.svg/2048px-User-avatar.svg.png" alt="" className="topbarImg"/>

@@ -12,8 +12,10 @@ import Feed from './Feed'
 import '../index.css'
 import PostDetail from './PostDetail'
 import EditPostForm from './EditPostForm'
+import Users from './Users'
+import Comments from './Comments'
 
-function App({handleDelete}){
+function App({handleDelete, users, comment}){
     const [posts, setPosts] = useState([])
     const [refresh, setRefresh] = useState(false)
     const [user, setUser] = useState(null) 
@@ -64,7 +66,7 @@ function App({handleDelete}){
     return(
         <>
         <GlobalStyle />
-        <Navigation user={user} setUser={setUser}/>
+        <Navigation user={user} setUser={setUser} users={users}/>
           <Switch>
           <Route path='/home'>
               <Home />
@@ -74,6 +76,9 @@ function App({handleDelete}){
             </Route>
             <Route path= '/posts'>
                 <PostForm addPost={addPost} />
+            </Route>
+            <Route path= '/users'>
+                <Users user={users} />
             </Route>
             {/* <Route exact path='/authentication'>
               <Authentication updateUser={updateUser}/>
@@ -89,6 +94,9 @@ function App({handleDelete}){
             </Route>
             <Route path= '/feed'>
                 <Feed posts = {posts} />
+            </Route>
+            <Route path= '/comments'>
+                <Comments comment = {comment} />
             </Route>
             <Route path= '/posts/:id/edit'>
                 <EditPostForm updatePost = {updatePost}/>

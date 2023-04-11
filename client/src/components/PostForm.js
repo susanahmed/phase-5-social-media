@@ -66,4 +66,4 @@ function PostForm({addPost}) {
 export default PostForm
 
 const Form = styled.form`
-display:flex;`
+`
