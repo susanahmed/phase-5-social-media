@@ -19,12 +19,17 @@ class Signup(Resource):
         password = request_json.get('password')
         image_url = request_json.get('image_url')
         bio = request_json.get('bio')
+        background_url = request_json.get('background_url')
+        location = request_json.get('location')
 
         user = User(
             username=username,
             image_url=image_url,
-            bio=bio
+            bio=bio,
+            background_url=background_url,
+            location=location
         )
+
         user.password_hash = password
 
         db.session.add(user)
@@ -92,9 +97,9 @@ class Posts(Resource):
 
     def post(self):
         new_post = Post(
+            title=request.get_json()['title'],
             description=request.get_json()['description'],
             file=request.get_json()['file'],
-            # likes = request.get_json()['likes']
         )
 
         db.session.add(new_post)

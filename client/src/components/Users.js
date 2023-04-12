@@ -3,7 +3,7 @@ import Profile from './Profile'
 import UserDisplay from './UserDisplay' 
 
 
-function Users() {
+function Users({friendsCount}) {
     const [users, setUsers] = useState([])
     
     useEffect(() => {

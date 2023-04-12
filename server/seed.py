@@ -56,7 +56,7 @@ if __name__ == '__main__':
             post = Post(
                 title= fake.word(),
                 description = fake.sentence(),
-                file = fake.url(),
+                file = "https://cdn.guff.com/site_0/media/33000/32406/items/6c5b77833010314ab28d6d09.jpg",
                 likes = random.randint(1, 3000),
 
             )

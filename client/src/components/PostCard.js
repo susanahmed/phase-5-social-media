@@ -29,8 +29,8 @@ function PostCard({post, updatePost}) {
                   <span className="postDate">{post.created_at}</span>
         <Link to={`/posts/${id}`}> 
             <h3>Title: {post.title}</h3>
-            <h2>Description: {post. description}</h2>  
-            <h1>{post.file}</h1>
+            <h2>Description: {post.description}</h2>  
+            <img src= {post.file} className="postImg"/>
             <h4>Likes: {likesCount}</h4>
         </Link>
           <div className="postBottom">

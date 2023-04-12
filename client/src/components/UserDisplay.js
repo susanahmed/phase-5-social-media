@@ -9,15 +9,15 @@ function UserDisplay({user}){
     return (
         <>
     <li className="sidebarFriendhr">
-        <img className="sidebarFriendImg" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/User-avatar.svg/2048px-User-avatar.svg.png" alt="" />
+        <img className="sidebarFriendImg" src="https://api.dicebear.com/6.x/bottts/svg" alt="" />
         <span className="sidebarFriendName"> {user.username} </span>
         <button>
         <BsPersonFillAdd onClick={() => setFriendsCount
               (friendsCount + 1)}/></button>
         <br />
-        <span className="sidebarFriendName"> {user.location} </span>
+        <span className="sidebarFriendName"> Location: {user.location} </span>
         <br />
-        <span className="sidebarFriendName"> {user.bio} </span>
+        <span className="sidebarFriendName"> Bio: {user.bio} </span>
     </li>
     </>
     )
