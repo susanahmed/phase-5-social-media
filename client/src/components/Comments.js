@@ -1,8 +1,9 @@
 import React, {useState, useEffect} from 'react'
 import CommentDisplay from './CommentDisplay'
+import CommentForm from './CommentForm'
 
 
-function Comments(){
+function Comments({addComment}){
     const [comments, setComments] = useState([])
 
     useEffect(() => {
@@ -13,6 +14,7 @@ function Comments(){
 
     return (
         <div >
+            <CommentForm />
         {comments?.map(comment => <CommentDisplay key={comment.id}  comment={comment}/>)}
 </div>
 

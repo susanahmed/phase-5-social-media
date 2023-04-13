@@ -92,6 +92,7 @@ class Post(db.Model, SerializerMixin):
             raise ValueError("Text must be valid!")
             return text
 
+
 class Comment(db.Model, SerializerMixin):
     __tablename__ = 'comments'
     id = db.Column(db.Integer, primary_key=True)
@@ -105,10 +106,10 @@ class Comment(db.Model, SerializerMixin):
 
     serialize_rules = ('-user.comments', '-post.comments')
 
-    # @validates('content')
-    # def validates_content(self, key, content):
-    #     if len(content) < 1:
+    # @validates('comment')
+    # def validates_comment(self, key, comment):
+    #     if len(comment) < 1:
     #         raise ValueError("Comment must be valid!")
-    #         return content
+    #         return comment
 
 

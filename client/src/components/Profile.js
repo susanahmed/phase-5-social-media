@@ -4,21 +4,34 @@ import PostForm from './PostForm'
 import Users from './Users'
 import UserDisplay from './UserDisplay'
 import Sidebar from './Sidebar'
-import {useState, createContext, useContext} from "react"
+import React, {useState, createContext, useContext} from "react"
+import {PostContext} from './App'
+import {BsPersonFillAdd} from 'react-icons/bs'
 
-function Profile({posts, addPost, user, setUser, users}) {
+export const AddContext = React.createContext()
+
+function Profile({addPost, user, setUser, users}) {
   console.log(user)
   const [toggle, setToggle] = useState(false)
   const [friendsCount, setFriendsCount]= useState(0)
+  const posts = useContext(PostContext)
 
 
   const handleClick = () => {
     setToggle(!toggle);
   };
+
+  const handleAddClick = () => setFriendsCount(friendsCount + 1)
+
     return (
         <>
+        <AddContext.Provider value={friendsCount}>
+          <button> 
+          <BsPersonFillAdd onClick = {handleAddClick} />
+          </button>
         <div className="profile">
-        <Sidebar />
+        <Sidebar handleAddClick={handleAddClick}/>
+        
         <div className="profileRight">
           <div className="profileRightTop">
             <div className="profileCover">
@@ -52,13 +65,12 @@ function Profile({posts, addPost, user, setUser, users}) {
             <h3>Share what's on your mind</h3>
             <PostForm />
             <div>
-              <PostCont posts={posts} addPost={addPost}/>
+              <PostCont posts= {posts}addPost={addPost}/>
             </div>
-            
           {/* </div> */}
         </div>
       </div>
-
+    </AddContext.Provider>
         
         </>
     )

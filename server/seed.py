@@ -65,7 +65,7 @@ if __name__ == '__main__':
         db.session.commit()
 
         comments = []
-        for i in range(10):
+        for i in range(100):
             comment = Comment(
                 comment = fake.sentence(),
             )

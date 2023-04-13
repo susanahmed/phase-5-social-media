@@ -1,11 +1,12 @@
-import React, {useState, createContext} from 'react'
+import React, {useState, createContext, useContext} from 'react'
 import './UserDisplay.css'
 import {BsPersonFillAdd, BsFillCheckCircleFill} from 'react-icons/bs'
+import {AddContext} from './Profile'
 
 
-function UserDisplay({user}){
-    const [friendsCount, setFriendsCount] = useState(0)
+function UserDisplay({user, handleAddClick}){
 
+    const friendsCount = useContext(AddContext)
 
     
     return (
@@ -14,9 +15,11 @@ function UserDisplay({user}){
         <img className="sidebarFriendImg" src="https://api.dicebear.com/6.x/bottts/svg" alt="" />
         <span className="sidebarFriendName"> {user.username} </span>
         <button>
-        <BsPersonFillAdd onClick={() => setFriendsCount
-              (friendsCount + 1)}/></button>
-    
+        <BsPersonFillAdd onClick={handleAddClick}/>
+
+        </button>
+        {/* <button onClick = {handleAddClick}>Add Friend</button>
+     */}
         <br />
         <span className="sidebarFriendName"> Location: {user.location} </span>
         <br />

@@ -7,24 +7,21 @@ import * as yup from "yup"
 import './PostForm.css'
 import { Icon, Button } from "semantic-ui-react"
 
-function PostForm({addPost}) {
+function CommentForm({addComment}) {
     const history = useHistory()
     const formSchema = yup.object().shape({
-        title: yup.string().required("Must enter text"),
-        file: yup.string(),
-        description: yup.string().required("Must enter a description")
+        comment: yup.string().required("Must enter text"),
+
     })
 
     const formik = useFormik({
         initialValues:{
-            title: '',
-            file: '',
-            description: '',
+            comment: '',
         },
 
         validationSchema: formSchema, 
         onSubmit:(values) => {
-            fetch("/posts", {
+            fetch("/comments", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -32,9 +29,9 @@ function PostForm({addPost}) {
                 body: JSON.stringify(values, null, 2),
             }).then((res) => {
                 if (res.ok) {
-                    res.json().then(post => {
-                        addPost(post)
-                        history.push(`/posts/${post.id}`)
+                    res.json().then(comment => {
+                        addComment(comment)
+                        history.push(`/comments/${comment.id}`)
                     })
                 }
             })
@@ -44,17 +41,9 @@ function PostForm({addPost}) {
         <div className='share'>
 
             <Form onSubmit = {formik.handleSubmit}>
-                <label>Title</label>
+                <label>Add Comment</label>
                 <br />
-                <input type = 'text' name = 'title' value={formik.values.title} onChange={formik.handleChange} />
-                <br />
-                <label>File</label>
-                <br />
-                <input type = 'text' name = 'file' value={formik.values.file} onChange={formik.handleChange} />
-                <br />
-                <label>Description</label>
-                <br />
-                <input type = 'text' name = 'description' value={formik.values.description} onChange={formik.handleChange} />
+                <input type = 'text' name = 'comment' value={formik.values.comment} onChange={formik.handleChange} />
 
                 <input type = 'submit' />
             </Form>
@@ -63,7 +52,7 @@ function PostForm({addPost}) {
     )
 }
 
-export default PostForm
+export default CommentForm
 
 const Form = styled.form`
 `

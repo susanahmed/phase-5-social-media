@@ -1,11 +1,12 @@
-import React, {useState} from 'react'
+import React, {useState, useContext} from 'react'
 import "./Sidebar.css"
 import Users from './Users'
 import UserDisplay from './UserDisplay'
+import {AddContext} from './Profile'
 
 
-function Sidebar({users}){
-
+function Sidebar({users, handleAddClick}){
+    const friendsCount = useContext(AddContext)
 
     return (
         <>
@@ -13,7 +14,7 @@ function Sidebar({users}){
             <h3>Suggested Friends</h3>
             <br />
         <ul className="sidebarFriendList">
-            <Users user={users} />
+            <Users user={users} friendsCount={friendsCount} handleAddClick={handleAddClick}/>
         </ul>
         </div>
         </>

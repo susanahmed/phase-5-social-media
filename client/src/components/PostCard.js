@@ -19,7 +19,7 @@ function PostCard({post, updatePost}) {
         'Content-Type': 'application/json', }
       })
       .then(() => setRefresh(!refresh))
-  }
+    }
     
     return (
       <div id={id} className = 'post'>
@@ -44,7 +44,7 @@ function PostCard({post, updatePost}) {
             <Icon name='edit' size="small" />
           </Button>
                 </Link>
-          <Button icon onClick={() => handleDelete(id)}>
+          <Button icon onClick={() => handleDelete(post.id)}>
               <Icon name='trash alternate' size="small" />
           </Button>
           <Link to= '/comments'> 

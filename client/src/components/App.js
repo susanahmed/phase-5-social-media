@@ -15,10 +15,17 @@ import EditPostForm from './EditPostForm'
 import Users from './Users'
 import Comments from './Comments'
 
+export const PostContext = React.createContext()
+
 function App({handleDelete, users, comment}){
     const [posts, setPosts] = useState([])
     const [refresh, setRefresh] = useState(false)
     const [user, setUser] = useState(null) 
+    const [comments, setComments] = useState([])
+
+    function post() {
+      setPosts(prevPosts => !prevPosts)
+    }
 
     useEffect(() => {
         fetchSession()
@@ -48,8 +55,12 @@ function App({handleDelete, users, comment}){
 
     if (!user) return <Login onLogin={setUser} />;
 
-    function addPost(post) {
-    setPosts([post, ...posts]);
+    function addPost(posts) {
+    setPosts([posts, ...posts]);
+    }
+
+    function addComment(comment) {
+      setComments([comment, ...comments]);
     }
 
     function updatePost(updatedPost){
@@ -67,7 +78,7 @@ function App({handleDelete, users, comment}){
         <>
         <GlobalStyle />
         <Navigation user={user} setUser={setUser} users={users}/>
-          <Switch>
+          <Switch>         
           <Route path='/home'>
               <Home />
             </Route>
@@ -83,9 +94,6 @@ function App({handleDelete, users, comment}){
             {/* <Route exact path='/authentication'>
               <Authentication updateUser={updateUser}/>
             </Route> */}
-            <Route exact path='/profile'>
-              <Profile posts={posts} user={user} setUser={setUser} handleDelete={handleDelete} setRefresh={setRefresh} refresh={refresh}/>
-            </Route>
             <Route path = '/posts'>
               <PostCont posts={posts} />
             </Route>
@@ -96,12 +104,19 @@ function App({handleDelete, users, comment}){
                 <Feed posts = {posts} />
             </Route>
             <Route path= '/comments'>
-                <Comments comment = {comment} />
+                <Comments comments={comments} />
             </Route>
             <Route path= '/posts/:id/edit'>
                 <EditPostForm updatePost = {updatePost}/>
+            </Route>            
+            <PostContext.Provider value = {posts} >
+            <Route exact path='/profile'>
+              <Profile user={user} setUser={setUser} handleDelete={handleDelete} setRefresh={setRefresh} refresh={refresh}/>
             </Route>
+            </PostContext.Provider>
+            
           </Switch>
+          
         </>
       )
     }

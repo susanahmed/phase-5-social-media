@@ -96,11 +96,15 @@ class Posts(Resource):
         )
 
     def post(self):
-        new_post = Post(
-            title=request.get_json()['title'],
-            description=request.get_json()['description'],
-            file=request.get_json()['file'],
-        )
+        try:
+
+            new_post = Post(
+                title=request.get_json()['title'],
+                description=request.get_json()['description'],
+                file=request.get_json()['file'],
+            )
+        except ValueError as e:
+            abort(422,e.args[0])
 
         db.session.add(new_post)
         db.session.commit()
@@ -187,9 +191,13 @@ class Comments(Resource):
         )
 
      def post(self):
-        comment = Comment(
-            comment =request.get_json()['comment']
-        )
+
+        try:
+            comment = Comment(
+                comment =request.get_json()['comment']
+            )
+        except ValueError as e:
+            abort(422,e.args[0])
 
         db.session.add(comment)
         db.session.commit()
@@ -243,6 +251,15 @@ class CommentsByID(Resource):
         
         return response
 api.add_resource(CommentsByID, '/comments/<int:id>')
+
+@app.errorhandler(NotFound)
+def handle_not_found(e):
+    response = make_response(
+        "Not Found: Sorry this does not exist!",
+        404
+    )
+
+    return response
 
 
 if __name__ == '__main__':
