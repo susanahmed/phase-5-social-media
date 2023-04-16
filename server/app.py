@@ -103,8 +103,8 @@ class Posts(Resource):
                 description=request.get_json()['description'],
                 file=request.get_json()['file'],
             )
-        except ValueError as e:
-            abort(422,e.args[0])
+        except:
+            abort(422, "Incorrect Information")
 
         db.session.add(new_post)
         db.session.commit()

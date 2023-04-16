@@ -21,8 +21,7 @@ function LoginForm({ onLogin }) {
       if (r.ok) {
         r.json().then((user) => onLogin(user));
       } else {
-        setError("Wrong Username or Password")
-        // r.json().then((error) => setError(error.message));
+        setError("Invalid Username or Password")
       }
     });
   }

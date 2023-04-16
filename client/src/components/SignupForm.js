@@ -10,13 +10,13 @@ function SignupForm({ onLogin }) {
   const [bio, setBio] = useState("");
   const [location, setLocation] = useState("");
   const [backgroundUrl, setBackgroundUrl] = useState("");
-  const [errors, setErrors] = useState(false);
+  const [error, setError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const history = useHistory()
 
   function handleSubmit(e) {
     e.preventDefault();
-    setErrors([]);
+    setError([]);
     setIsLoading(true);
     fetch("/signup", {
       method: "POST",
@@ -39,7 +39,7 @@ function SignupForm({ onLogin }) {
           onLogin(user)
           history.pushState('/home')});
       } else {
-        setErrors("Please enter valid information")
+        setError("Please enter valid information")
         // r.json().then((err) => setErrors(err.errors));
       }
     });
@@ -47,6 +47,7 @@ function SignupForm({ onLogin }) {
 
   return (
     <form onSubmit={handleSubmit}>
+      {error&& <h2 style= {{color:'red'}}>{error}</h2>}
       <h2>Sign Up for TechBook!</h2>
       <div>
         <label htmlFor="username">Username</label>

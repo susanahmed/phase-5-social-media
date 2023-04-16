@@ -44,14 +44,14 @@ class User(db.Model, SerializerMixin):
 
     serialize_rules = ('-post.users','-_password_hash',)
 
-    @validates('name')
+    @validates('username')
     def validates_name(self, key, value):
         if not value:
             raise ValueError("User must have a name.")
         return value
 
     def __repr__(self):
-        return f'User: {self.id}, Name {self.name}, Email: {self.email}, Admin: {self.admin}'
+        return f'User: {self.id}, Name: {self.username}, Email: {self.email}, Admin: {self.admin}'
 
 class Friend(db.Model, SerializerMixin):
     __tablename__ = 'friends'
@@ -75,7 +75,7 @@ class Post(db.Model, SerializerMixin):
     __tablename__ = 'posts'
     id = db.Column(db.Integer, primary_key=True)
 
-    title = db.Column(db.String)
+    title = db.Column(db.String, nullable=False)
     description = db.Column(db.String)
     file = db.Column(db.String)
     likes = db.Column(db.Integer)
@@ -86,11 +86,11 @@ class Post(db.Model, SerializerMixin):
     user_id = db.Column(db.Integer(), db.ForeignKey('users.id'))
     serialize_rules= ('-users.post',)
 
-    @validates('text')
-    def validates_content(self, key, text):
-        if len(text) < 1:
-            raise ValueError("Text must be valid!")
-            return text
+    @validates('title')
+    def validates_content(self, key, title):
+        if len(title) < 1:
+            raise ValueError("Please enter a Title")
+            return title
 
 
 class Comment(db.Model, SerializerMixin):

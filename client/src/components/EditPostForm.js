@@ -5,6 +5,7 @@ import { useHistory, useParams } from 'react-router-dom'
 import { useFormik } from "formik"
 import * as yup from "yup"
 import { Form, Modal, Header, Button, Icon, Popup } from "semantic-ui-react";
+import PostDetail from './PostDetail'
 
 function EditPostForm({ posts, updatePost }) {
 console.log(posts)
@@ -40,7 +41,7 @@ console.log(posts)
                     updatePost(updatedPost)
                 })
             } else {
-                res.json().then((err) => setErrors([err.error]))
+                setErrors("Please fill out required fields")
             }
         })
     }})
@@ -48,8 +49,9 @@ console.log(posts)
     return(
         <>
         <h1> Edit Post:</h1>
+        {errors&& <h2 style= {{color:'red'}}>{errors}</h2>}
         <Form onSubmit = {formik.handleSubmit}>
-            <label>Title</label>
+            <label>Title*</label>
                  <br />
                  <input type = 'text' name = 'title' value={formik.values.title} onChange={formik.handleChange} />
                 <br />
@@ -64,6 +66,7 @@ console.log(posts)
                 <input type = 'submit' />
 
             </Form>
+           
         </>
     )
 
