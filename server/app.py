@@ -117,7 +117,7 @@ api.add_resource(Posts, '/posts')
 
 class PostByID(Resource):
     def get(self,id):
-        post = Post.query.filter_by(id=id).first()
+        post = Post.query.filter(Post.id == id).first()
         if not post:
             raise NotFound
         post_dict = post.to_dict()
@@ -129,12 +129,12 @@ class PostByID(Resource):
         return response
 
     def patch(self, id):
-        post = Post.query.filter_by(id=id).first()
+        post = Post.query.filter(Post.id == id).first()
         if not post:
             raise NotFound
 
-        for attr in request.form:
-            setattr(post, attr, request.form[attr])
+        for attr in request.get_json():
+            setattr(post, attr, request.get_json()[attr])
 
         db.session.add(post)
         db.session.commit()

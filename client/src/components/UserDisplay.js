@@ -2,9 +2,11 @@ import React, {useState, createContext, useContext} from 'react'
 import './UserDisplay.css'
 import {BsPersonFillAdd, BsFillCheckCircleFill} from 'react-icons/bs'
 import {AddContext} from './Profile'
+import {Link} from 'react-router-dom'
 
 
 function UserDisplay({user, handleAddClick}){
+    const {id, username, bio, location} = user
 
     const friendsCount = useContext(AddContext)
 

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import {useHistory} from 'react-router-dom'
 import './SignUpForm.css'
 
 function SignupForm({ onLogin }) {
@@ -9,8 +10,9 @@ function SignupForm({ onLogin }) {
   const [bio, setBio] = useState("");
   const [location, setLocation] = useState("");
   const [backgroundUrl, setBackgroundUrl] = useState("");
-  const [errors, setErrors] = useState([]);
+  const [errors, setErrors] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const history = useHistory()
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -33,15 +35,19 @@ function SignupForm({ onLogin }) {
     }).then((r) => {
       setIsLoading(false);
       if (r.ok) {
-        r.json().then((user) => onLogin(user));
+        r.json().then((user) => {
+          onLogin(user)
+          history.pushState('/home')});
       } else {
-        r.json().then((err) => setErrors(err.errors));
+        setErrors("Please enter valid information")
+        // r.json().then((err) => setErrors(err.errors));
       }
     });
   }
 
   return (
     <form onSubmit={handleSubmit}>
+      <h2>Sign Up for TechBook!</h2>
       <div>
         <label htmlFor="username">Username</label>
         <input
@@ -52,6 +58,7 @@ function SignupForm({ onLogin }) {
           onChange={(e) => setUsername(e.target.value)}
         />
       </div>
+      <br/>
       <div>
         <label htmlFor="password">Password</label>
         <input
@@ -62,6 +69,7 @@ function SignupForm({ onLogin }) {
           autoComplete="current-password"
         />
       </div>
+      <br />
       <div>
         <label htmlFor="password">Password Confirmation</label>
         <input
@@ -72,6 +80,7 @@ function SignupForm({ onLogin }) {
           autoComplete="current-password"
         />
       </div>
+      <br />
       <div>
         <label htmlFor="imageUrl">Profile Image</label>
         <input
@@ -81,6 +90,7 @@ function SignupForm({ onLogin }) {
           onChange={(e) => setImageUrl(e.target.value)}
         />
       </div>
+      <br />
       <div>
         <label htmlFor="backgroundUrl">Background Image</label>
         <input
@@ -90,6 +100,7 @@ function SignupForm({ onLogin }) {
           onChange={(e) => setBackgroundUrl(e.target.value)}
         />
       </div>
+      <br />
       <div>
         <label htmlFor="bio">Bio</label>
         <textarea
@@ -108,6 +119,7 @@ function SignupForm({ onLogin }) {
           onChange={(e) => setLocation(e.target.value)}
         />
       </div>
+      <br />
       <div>
         <button type="submit">{isLoading ? "Loading..." : "Sign Up"}</button>
       </div>

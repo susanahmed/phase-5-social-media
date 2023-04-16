@@ -2,6 +2,7 @@ import './Feed.css'
 import PostCont from "./PostCont"
 
 function Feed({posts, handleDelete}) {
+  console.log(posts)
     return (
         <>
         <div className="feed">

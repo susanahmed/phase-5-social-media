@@ -3,8 +3,9 @@ import React, { useState } from "react";
 function LoginForm({ onLogin }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [errors, setErrors] = useState([]);
+  const [error, setError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -20,7 +21,8 @@ function LoginForm({ onLogin }) {
       if (r.ok) {
         r.json().then((user) => onLogin(user));
       } else {
-        r.json().then((err) => setErrors(err.errors));
+        setError("Wrong Username or Password")
+        // r.json().then((error) => setError(error.message));
       }
     });
   }
@@ -28,6 +30,8 @@ function LoginForm({ onLogin }) {
   return (
     <form onSubmit={handleSubmit}>
       <div>
+        {error&& <h2 style= {{color:'red'}}>{error}</h2>}
+        <h2>Please Login or Sign Up to TechBook!</h2>
         <label htmlFor="username">Username</label>
         <input
           type="text"
@@ -37,6 +41,7 @@ function LoginForm({ onLogin }) {
           onChange={(e) => setUsername(e.target.value)}
         />
       </div>
+      <br />
       <div>
         <label htmlFor="password">Password</label>
         <input
@@ -47,6 +52,7 @@ function LoginForm({ onLogin }) {
           onChange={(e) => setPassword(e.target.value)}
         />
       </div>
+      <br />
       <div>
         <button variant="fill" color="primary" type="submit">
           {isLoading ? "Loading..." : "Login"}

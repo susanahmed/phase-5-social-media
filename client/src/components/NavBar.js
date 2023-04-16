@@ -6,8 +6,9 @@ import {RiLogoutBoxRFill} from 'react-icons/ri'
 import {FaUserFriends} from 'react-icons/fa'
 import Profile from './Profile'
 import Users from './Users'
+import Searchbar from './Searchbar'
 
-function Navigation({user, setUser}) {
+function Navigation({user, setUser, handleChange}) {
 console.log(user)
   function handleLogoutClick() {
     fetch("/logout", { method: "DELETE" }).then((r) => {
@@ -29,6 +30,7 @@ console.log(user)
           <input
             placeholder="Search TechBook"
             className="searchInput"
+            onClick = {handleChange}
           />
         </div>
       </div>
