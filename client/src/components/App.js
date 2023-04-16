@@ -24,9 +24,9 @@ function App({handleDelete, users, comment}){
     const [user, setUser] = useState(null) 
     const [comments, setComments] = useState([])
 
-    // function post() {
-    //   setPosts(prevPosts => !prevPosts)
-    // }
+    function post() {
+      setPosts(prevPosts => !prevPosts)
+    }
 
     useEffect(() => {
         fetchSession()
@@ -81,7 +81,6 @@ function App({handleDelete, users, comment}){
         <Navigation user={user} setUser={setUser} users={users}/>
           <Switch>         
           <Route path='/home'>
-            <EditPostForm updatePost = {updatePost} posts={posts}/>
               <Home />
             </Route>
           <Route path='/posts/:id'>

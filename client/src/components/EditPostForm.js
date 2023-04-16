@@ -11,6 +11,7 @@ console.log(posts)
     const [errors, setErrors] = useState([])
     const [post, setPost] = useState([])
     const {id, title, description, file, comments} = post
+    const params = useParams()
 
     const formSchema = yup.object().shape({
         title: yup.string().required("Please enter a title"),
@@ -26,8 +27,8 @@ console.log(posts)
 
         }, 
         validationScehma: formSchema,
-        onSubmit:(values) =>
-        fetch(`/posts/${post.id}`, {
+        onSubmit:(values) => {
+        fetch(`/posts/${params.id}`, {
             method: "PATCH",
             headers: {
                 "Content-Type": "application/json",
@@ -42,7 +43,7 @@ console.log(posts)
                 res.json().then((err) => setErrors([err.error]))
             }
         })
-    })
+    }})
 
     return(
         <>
