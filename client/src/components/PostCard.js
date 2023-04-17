@@ -39,10 +39,10 @@ function PostCard({post, updatePost, handleDelete}) {
                   <span className="postDate">{post.created_at}</span>
         <Link to={`/posts/${post.id}`}> 
         <div>
-            <h3>Title: {post.title}</h3>
-            <h2>Description: {post.description}</h2>  
+            <h5 className="postText">Title: {post.title}</h5>
+            <h4 className="postText">Description: {post.description}</h4>  
             <img src= {post.file} className="postImg"/>
-            <h4>Likes: {likesCount}</h4>
+            <h5 className="postText">Likes: {likesCount}</h5>
         </div>
         </Link>
           <div className="postBottom">

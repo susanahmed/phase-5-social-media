@@ -38,11 +38,9 @@ function Navigation({user, setUser, handleChange}) {
             <FaUserFriends />
           </div>
           </Link>
-          <Link to='/comments'>
           <div className="topbarIconItem">
             <BiMessageAltDetail /> 
           </div>
-          </Link>
           <div className="topbarIconItem">
             <BsBellFill />
           </div>

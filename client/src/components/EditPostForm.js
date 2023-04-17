@@ -6,6 +6,7 @@ import { useFormik } from "formik"
 import * as yup from "yup"
 import { Form, Modal, Header, Button, Icon, Popup } from "semantic-ui-react";
 import PostDetail from './PostDetail'
+import './PostDetail.css'
 
 function EditPostForm({ posts, updatePost }) {
 console.log(posts)
@@ -48,9 +49,10 @@ console.log(posts)
 
     return(
         <>
-        <h1> Edit Post:</h1>
+        <br/>
+        <h3 className= 'postDetail'> Edit Post:</h3>
         {errors&& <h2 style= {{color:'red'}}>{errors}</h2>}
-        <Form onSubmit = {formik.handleSubmit}>
+        <Form onSubmit = {formik.handleSubmit} className = 'postDetail'>
             <label>Title*</label>
                  <br />
                  <input type = 'text' name = 'title' value={formik.values.title} onChange={formik.handleChange} />

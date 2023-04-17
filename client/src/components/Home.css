@@ -1,0 +1,13 @@
+.background{
+    background: url("https://as2.ftcdn.net/v2/jpg/02/06/60/49/1000_F_206604992_yMzBFofmJEeznSvs3OZw0NXYwVBb2ryr.jpg");
+    background-size: cover;
+    min-height: 100vh;
+    height: 100%;
+    margin-top: 0px;
+}
+
+.font-link{
+    font-family: 'Press Start 2P', cursive;
+    text-align: center;
+    padding: 50px;
+}

@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import {Link} from 'react-router-dom'
 import PostCard from './PostCard'
 import EditPostForm from './EditPostForm'
+import './PostDetail.css'
 
 function PostDetail(){
   const [post, setPost]= useState([])
@@ -31,9 +32,13 @@ function PostDetail(){
     <>
     <div id ={id}>
       <EditPostForm />
-      <h1>Title: {title}</h1>
-      <h2>Description: {description}</h2>
-      <img src = {file} />
+      <br />
+      <br />
+      <div id ={id} className='post'>
+      <h5 className= 'postDetail'>Title: {title}</h5>
+      <h4 className= 'postDetail'>Description: {description}</h4>
+      <img className='postImg' src = {file} />
+    </div>
     </div>
     <ul>
       <li>{comments}</li>
