@@ -75,7 +75,7 @@ class Post(db.Model, SerializerMixin):
     __tablename__ = 'posts'
     id = db.Column(db.Integer, primary_key=True)
 
-    title = db.Column(db.String, nullable=False)
+    title = db.Column(db.String)
     description = db.Column(db.String)
     file = db.Column(db.String)
     likes = db.Column(db.Integer)
@@ -85,12 +85,6 @@ class Post(db.Model, SerializerMixin):
 
     user_id = db.Column(db.Integer(), db.ForeignKey('users.id'))
     serialize_rules= ('-users.post',)
-
-    @validates('title')
-    def validates_content(self, key, title):
-        if len(title) < 1:
-            raise ValueError("Please enter a Title")
-            return title
 
 
 class Comment(db.Model, SerializerMixin):
@@ -105,11 +99,4 @@ class Comment(db.Model, SerializerMixin):
     post_id = db.Column(db.Integer, db.ForeignKey('posts.id'))
 
     serialize_rules = ('-user.comments', '-post.comments')
-
-    # @validates('comment')
-    # def validates_comment(self, key, comment):
-    #     if len(comment) < 1:
-    #         raise ValueError("Comment must be valid!")
-    #         return comment
-
 

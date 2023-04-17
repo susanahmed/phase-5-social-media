@@ -1,3 +1,4 @@
+import React, {useState} from 'react'
 import {Link} from 'react-router-dom'
 import { BsFillPersonFill, BsBellFill } from 'react-icons/bs'
 import { BiMessageAltDetail, BiSearchAlt } from 'react-icons/bi'
@@ -9,7 +10,7 @@ import Users from './Users'
 import Searchbar from './Searchbar'
 
 function Navigation({user, setUser, handleChange}) {
-console.log(user)
+
   function handleLogoutClick() {
     fetch("/logout", { method: "DELETE" }).then((r) => {
       if (r.ok) {
@@ -25,14 +26,6 @@ console.log(user)
         <span className="logo"><Link to = '/home'>TECHBOOK</Link></span>
       </div>
       <div className="topbarCenter">
-        <div className="searchbar">
-          <BiSearchAlt className="searchIcon" />
-          <input
-            placeholder="Search TechBook"
-            className="searchInput"
-            onClick = {handleChange}
-          />
-        </div>
       </div>
       <div className="topbarRight">
         <div className="topbarLinks">

@@ -7,38 +7,30 @@ import EditPostForm from './EditPostForm'
 
 
 
-function PostCard({post, updatePost}) {
+function PostCard({post, updatePost, handleDelete}) {
   console.log(post)
     const {id, title, description, file, likes} = post
-    const [posst, setPosst] = useState()
+    const [posts, setPosts] = useState([])
     const [refresh, setRefresh] = useState(false)
     const [likesCount, setLikesCount] = useState(post.likes)
     const params = useParams()
     const history=useHistory()
-    // useEffect(() =>{
-    //   fetch(`/posts/${params.id}`)
-    //   .then(res => {
-    //     if(res.ok){
-    //       res.json().then(data=> setPosst(data))
-    //     } else {
-    //       console.log("ERROR")
-    //     }
-    //   })
-    // },[])
-
-
-
 
     function handleDelete(id) {
-      fetch(`/posts/${post.id}`, {
+      fetch(`/posts/${id}`, {
       method: 'DELETE',
       headers: { 
         'Accept': 'application/json',
         'Content-Type': 'application/json', }
+      }).then((r) => {
+        if (r.ok) {
+          setPosts((postData) => 
+          postData.filter((post)=> post.id !== id))
+        };
+        setRefresh(prev => !prev)
       })
-      .then(() => setRefresh(!refresh))
     }
-    
+
     return (
       <div id={id} className = 'post'>
         <div className = 'postWrapper'>

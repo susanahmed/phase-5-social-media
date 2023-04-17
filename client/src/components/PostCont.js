@@ -9,7 +9,7 @@ console.log(posts)
     return (
      <div className='feed'>
         <div className="feedWrapper">
-             {posts?.map(post => <PostCard key={post.id} post={post}  />)}
+             {posts?.map(post => <PostCard key={post.id} post={post} handleDelete={handleDelete}/>)}
     </div>
      </div>
     )

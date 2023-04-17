@@ -169,7 +169,7 @@ class Users(Resource):
 api.add_resource(Users, '/users')
 
 class UserByID(Resource):
-    def get(self,id):
+    def get(self, id):
         user = User.query.filter_by(id=id).first()
         if not user:
             raise NotFound
@@ -180,7 +180,7 @@ class UserByID(Resource):
         )
         
         return response
-api.add_resource(UserByID, '/user/<int:id>')
+api.add_resource(UserByID, '/users/<int:id>')
 
 class Comments(Resource):
      def get(self):

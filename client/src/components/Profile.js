@@ -10,7 +10,7 @@ import {BsPersonFillAdd} from 'react-icons/bs'
 
 export const AddContext = React.createContext()
 
-function Profile({addPost, user, setUser, users}) {
+function Profile({addPost, user, setUser, users, handleDelete}) {
   console.log(user)
   const [toggle, setToggle] = useState(false)
   const [friendsCount, setFriendsCount]= useState(0)

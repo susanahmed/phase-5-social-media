@@ -14,11 +14,11 @@ import PostDetail from './PostDetail'
 import EditPostForm from './EditPostForm'
 import Users from './Users'
 import Comments from './Comments'
-// import IndividualPost from './IndividualPost'
+import UserProfile from './UserProfile'
 
 export const PostContext = React.createContext()
 
-function App({handleDelete, users, comment}){
+function App({ handleDelete, users, comment}){
     const [posts, setPosts] = useState([])
     const [refresh, setRefresh] = useState(false)
     const [user, setUser] = useState(null) 
@@ -75,6 +75,7 @@ function App({handleDelete, users, comment}){
         setRefresh(!refresh);
     }
 
+
     return(
         <>
         <GlobalStyle />
@@ -84,25 +85,22 @@ function App({handleDelete, users, comment}){
               <Home />
             </Route>
           <Route path='/posts/:id'>
-            <PostDetail />
+            <PostDetail handleDelete={handleDelete}/>
             </Route>
-            <Route path= '/posts'>
-                <PostCont post={posts} />
+            <Route path= '/users/:id'>
+                <UserProfile user={users} posts={posts}/>
             </Route>
             <Route path= '/users'>
                 <Users user={users} />
             </Route>
-            {/* <Route exact path='/authentication'>
-              <Authentication updateUser={updateUser}/>
-            </Route> */}
             <Route path = '/posts'>
-              <PostCont posts={posts} />
+              <PostCont posts={posts} handleDelete={handleDelete} setRefresh={setRefresh} setPosts={setPosts}/>
             </Route>
             <Route path = '/login'>
                 <Login />
             </Route>
             <Route path= '/feed'>
-                <Feed posts = {posts} />
+                <Feed posts = {posts} handleDelete={handleDelete}/>
             </Route>
             <Route path= '/comments'>
                 <Comments comments={comments} />
@@ -112,10 +110,9 @@ function App({handleDelete, users, comment}){
             </Route>      
             <PostContext.Provider value = {posts} >
             <Route exact path='/profile'>
-              <Profile user={user} setUser={setUser} handleDelete={handleDelete} setRefresh={setRefresh} refresh={refresh}/>
+              <Profile user={user} setUser={setUser} handleDelete={handleDelete} setRefresh={setRefresh} refresh={refresh} setPosts={setPosts} addPost={addPost}/>
             </Route>
             </PostContext.Provider>
-            
           </Switch>
           
         </>
