@@ -51,3 +51,6 @@
 .profileRightBottom{
     display: flex;
 }
+.share{
+    text-align: center;
+}

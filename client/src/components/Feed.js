@@ -5,8 +5,8 @@ function Feed({posts, handleDelete}) {
   console.log(posts)
     return (
         <>
-        <div className="feed">
-      <div className="feedWrapper">
+        <div >
+      <div>
         <PostCont posts={posts} handleDelete={handleDelete}/>
       </div>
     </div>

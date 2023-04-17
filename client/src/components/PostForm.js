@@ -42,6 +42,8 @@ function PostForm({addPost}) {
     })
     return(
         <div className='share'>
+            
+            <h3>Share what's on your mind</h3>
 
             <Form onSubmit = {formik.handleSubmit}>
                 <label>Title</label>
