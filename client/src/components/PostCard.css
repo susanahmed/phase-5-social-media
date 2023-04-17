@@ -46,11 +46,15 @@
   }
   
   .postImg{
-      margin-top: 20px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+      /* margin-top: 20px;
       width: 75%;
       max-height: 500px;
       object-fit: contain;
-      text-align: center;
+      text-align: center; */
   }
   
   .postBottom{

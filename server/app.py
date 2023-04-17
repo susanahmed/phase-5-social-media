@@ -261,6 +261,50 @@ def handle_not_found(e):
 
     return response
 
+class Messages(Resource):
+     def get(self):
+        message_dicts = [message.to_dict() for message in Message.query.all()]
+        return make_response(
+            message_dicts,
+            200,
+        )
+
+     def post(self):
+
+        try:
+            message = Message(
+                text =request.get_json()['text'],
+                from_user_id=request.get_json()['from_user_id']
+            )
+        except ValueError as e:
+            abort(422,e.args[0])
+
+        db.session.add(message)
+        db.session.commit()
+
+        return make_response(
+            message.to_dict(),
+            201
+        )
+api.add_resource(Messages, '/messages')
+
+class MessageByID(Resource):
+    def get(self, id):
+        message = Message.query.filter(Message.id == id).first()
+        if not message:
+            raise NotFound
+        message_dict = message.to_dict()
+        response = make_response(
+            message_dict,
+            200
+        )
+        
+        return response
+
+api.add_resource(MessageByID, '/messages/<int:id>')
+
+
+
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)

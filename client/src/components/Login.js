@@ -2,20 +2,23 @@ import { useState } from "react";
 import styled from "styled-components";
 import LoginForm from "./LoginForm";
 import SignupForm from "./SignupForm";
+import './Login.css'
 
 
 function Login({ onLogin }) {
   const [showLogin, setShowLogin] = useState(true);
 
   return (
+    <div className="background">
+      <span className="logo">TECHBOOK</span>
     <Wrapper>
       {showLogin ? (
         <>
           <LoginForm onLogin={onLogin} />
           <Divider />
-          <p>
+          <p className="font-link">
             Don't have an account? &nbsp;
-            <button color="secondary" onClick={() => setShowLogin(false)}>
+            <button color="secondary" onClick={() => setShowLogin(false)} className="button-link">
               Sign Up
             </button>
           </p>
@@ -24,15 +27,16 @@ function Login({ onLogin }) {
         <>
           <SignupForm onLogin={onLogin} />
           <Divider />
-          <p>
+          <p className="font-link">
             Already have an account? &nbsp;
-            <button color="secondary" onClick={() => setShowLogin(true)}>
+            <button color="secondary" onClick={() => setShowLogin(true)} className="button-link">
               Log In
             </button>
           </p>
         </>
       )}
     </Wrapper>
+    </div>
   );
 }
 

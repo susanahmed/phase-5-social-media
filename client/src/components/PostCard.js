@@ -4,11 +4,9 @@ import './PostCard.css'
 import { Icon, Button } from "semantic-ui-react"
 import EditPostForm from './EditPostForm'
 
-
-
-
 function PostCard({post, updatePost, handleDelete}) {
   console.log(post)
+  
     const {id, title, description, file, likes} = post
     const [posts, setPosts] = useState([])
     const [refresh, setRefresh] = useState(false)

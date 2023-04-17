@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import './Login.css'
 
 function LoginForm({ onLogin }) {
   const [username, setUsername] = useState("");
@@ -27,10 +28,10 @@ function LoginForm({ onLogin }) {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className="font-link">
       <div>
         {error&& <h2 style= {{color:'red'}}>{error}</h2>}
-        <h2>Please Login or Sign Up to TechBook!</h2>
+        <h2 className="font-link">Please Login or Sign Up to TECHBOOK</h2>
         <label htmlFor="username">Username</label>
         <input
           type="text"
@@ -53,7 +54,7 @@ function LoginForm({ onLogin }) {
       </div>
       <br />
       <div>
-        <button variant="fill" color="primary" type="submit">
+        <button variant="fill" color="primary" type="submit" className="button-link">
           {isLoading ? "Loading..." : "Login"}
         </button>
       </div>

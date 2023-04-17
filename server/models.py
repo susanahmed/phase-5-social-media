@@ -66,10 +66,16 @@ class Message(db.Model, SerializerMixin):
     id = db.Column(db.Integer, primary_key=True)
 
     text = db.Column(db.String)
-    to_user_id = db.Column(db.Integer)
-    from_user_id = db.Column(db.Integer)
+    from_user_id = db.Column(db.String)
     created_at = db.Column(db.DateTime, server_default = db.func.now())
     updated_at = db.Column(db.DateTime, onupdate = db.func.now())
+
+
+    @validates('body')
+    def validates_body(self, key, value):
+        if not value:
+            raise ValueError("Please enter a message")
+        return value
 
 class Post(db.Model, SerializerMixin):
     __tablename__ = 'posts'

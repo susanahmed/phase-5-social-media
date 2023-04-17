@@ -9,5 +9,15 @@
 .font-link{
     font-family: 'Press Start 2P', cursive;
     text-align: center;
-    padding: 50px;
+    padding: 15px;
+}
+
+.boxed{
+    border: 3px red
+}
+.img{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
 }

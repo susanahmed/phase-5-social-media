@@ -15,10 +15,15 @@ import EditPostForm from './EditPostForm'
 import Users from './Users'
 import Comments from './Comments'
 import UserProfile from './UserProfile'
+import Messages from './Messages'
+import MessageList from './MessageList'
+import NewMessage from './NewMessage'
+import MessageDetail from './MessageDetail'
 
 export const PostContext = React.createContext()
 
 function App({ handleDelete, users, comment}){
+    const [messages, setMessages] = useState([])
     const [posts, setPosts] = useState([])
     const [refresh, setRefresh] = useState(false)
     const [user, setUser] = useState(null) 
@@ -31,7 +36,14 @@ function App({ handleDelete, users, comment}){
     useEffect(() => {
         fetchSession()
         fetchPosts()
-    },[]) 
+        fetchMessages()
+    },[])
+
+    const fetchMessages = () => (
+      fetch('/messages')
+      .then((r) => r.json())
+      .then((messages) => setMessages(messages))
+    )
 
     const fetchPosts = () => (
         fetch('/posts')
@@ -76,6 +88,11 @@ function App({ handleDelete, users, comment}){
     }
 
 
+  function handleAddMessage(newMessage){
+      setMessages([...messages, newMessage])
+  }
+
+
     return(
         <>
         <GlobalStyle />
@@ -93,6 +110,10 @@ function App({ handleDelete, users, comment}){
             <Route path= '/users'>
                 <Users user={users} />
             </Route>
+            {/* <Route path= '/messages'>
+              <NewMessage message={messages}/>
+                <MessageList messages={messages} setMessages={setMessages} />
+            </Route> */}
             <Route path = '/posts'>
               <PostCont posts={posts} handleDelete={handleDelete} setRefresh={setRefresh} setPosts={setPosts}/>
             </Route>
@@ -103,7 +124,7 @@ function App({ handleDelete, users, comment}){
                 <Feed posts = {posts} handleDelete={handleDelete}/>
             </Route>
             <Route path= '/comments'>
-                <Comments comments={comments} />
+                <Comments comments={comments} users={users}/>
             </Route>
             <Route path= '/posts/:id/edit'>
                 <EditPostForm updatePost = {updatePost} posts = {posts}/>

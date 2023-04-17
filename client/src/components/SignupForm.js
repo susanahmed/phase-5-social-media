@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import {useHistory} from 'react-router-dom'
-import './SignUpForm.css'
+import './Login.css'
+
 
 function SignupForm({ onLogin }) {
   const [username, setUsername] = useState("");
@@ -46,9 +47,9 @@ function SignupForm({ onLogin }) {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className="font-link">
       {error&& <h2 style= {{color:'red'}}>{error}</h2>}
-      <h2>Sign Up for TechBook!</h2>
+      <h2 className="font-link">Sign Up for TECHBOOK</h2>
       <div>
         <label htmlFor="username">Username</label>
         <input
@@ -122,7 +123,7 @@ function SignupForm({ onLogin }) {
       </div>
       <br />
       <div>
-        <button type="submit">{isLoading ? "Loading..." : "Sign Up"}</button>
+        <button type="submit" className="button-link">{isLoading ? "Loading..." : "Sign Up"}</button>
       </div>
     </form>
   );

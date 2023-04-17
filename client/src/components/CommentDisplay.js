@@ -19,6 +19,7 @@ function handleDeleteComment(id) {
 
     return(
         <>
+        <h3>{comment.user_id} says: </h3>
         <h1>{comment.comment}</h1>
         <h4>Like: {likesCount}</h4>
         <Button icon onClick={() => handleDeleteComment(id)}>

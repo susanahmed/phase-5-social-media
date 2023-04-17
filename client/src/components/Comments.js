@@ -3,7 +3,7 @@ import CommentDisplay from './CommentDisplay'
 import CommentForm from './CommentForm'
 
 
-function Comments({addComment}){
+function Comments({user, addComment}){
     const [comments, setComments] = useState([])
 
     useEffect(() => {
