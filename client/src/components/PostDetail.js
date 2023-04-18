@@ -38,11 +38,9 @@ function PostDetail(){
       <h5 className= 'postDetail'>Title: {title}</h5>
       <h4 className= 'postDetail'>Description: {description}</h4>
       <img className='postImg' src = {file} />
+      <br />
     </div>
     </div>
-    <ul>
-      <li>{comments}</li>
-    </ul>
     </>
   )
 }
