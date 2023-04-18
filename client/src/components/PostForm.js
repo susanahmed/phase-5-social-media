@@ -34,7 +34,7 @@ function PostForm({addPost}) {
                 if (res.ok) {
                     res.json().then(post => {
                         addPost(post)
-                        history.push(`/posts/${post.id}`)
+                        history.push(`/profile`)
                     })
                 }
             })
@@ -42,7 +42,7 @@ function PostForm({addPost}) {
     })
     return(
         <div className='share'>
-            
+
             <h3>Share what's on your mind</h3>
 
             <Form onSubmit = {formik.handleSubmit}>

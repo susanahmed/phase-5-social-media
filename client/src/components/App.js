@@ -22,7 +22,7 @@ import MessageDetail from './MessageDetail'
 
 export const PostContext = React.createContext()
 
-function App({ handleDelete, users, comment}){
+function App({ users, comment}){
     const [messages, setMessages] = useState([])
     const [posts, setPosts] = useState([])
     const [refresh, setRefresh] = useState(false)
@@ -68,8 +68,8 @@ function App({ handleDelete, users, comment}){
 
     if (!user) return <Login onLogin={setUser} />;
 
-    function addPost(posts) {
-    setPosts([posts, ...posts]);
+    function addPost(newPost) {
+    setPosts([newPost, ...posts]);
     }
 
     function addComment(comment) {
@@ -88,8 +88,22 @@ function App({ handleDelete, users, comment}){
     }
 
 
-  function handleAddMessage(newMessage){
-      setMessages([...messages, newMessage])
+  // function handleAddMessage(newMessage){
+  //     setMessages([...messages, newMessage])
+  // }
+
+  function handleDelete(id) {
+    fetch(`posts/${id}`, {
+      method: "DELETE",
+    }) .then((r) => {
+      if (r.ok) {
+        setPosts((postData) =>
+        posts.filter((post) => post.id !== id)
+        );
+        setRefresh(prev => !prev)
+    
+      }
+    })
   }
 
 
@@ -102,7 +116,7 @@ function App({ handleDelete, users, comment}){
               <Home />
             </Route>
           <Route path='/posts/:id'>
-            <PostDetail handleDelete={handleDelete}/>
+            <PostDetail handleDelete={handleDelete} updatePost={updatePost} />
             </Route>
             <Route path= '/users/:id'>
                 <UserProfile user={users} posts={posts}/>
@@ -116,6 +130,7 @@ function App({ handleDelete, users, comment}){
             </Route> */}
             <Route path = '/posts'>
               <PostCont posts={posts} handleDelete={handleDelete} setRefresh={setRefresh} setPosts={setPosts}/>
+          
             </Route>
             <Route path = '/login'>
                 <Login />
@@ -126,9 +141,9 @@ function App({ handleDelete, users, comment}){
             <Route path= '/comments'>
                 <Comments comments={comments} users={users}/>
             </Route>
-            <Route path= '/posts/:id/edit'>
+            {/* <Route path= '/posts/:id/edit'>
                 <EditPostForm updatePost = {updatePost} posts = {posts}/>
-            </Route>      
+            </Route>       */}
             <PostContext.Provider value = {posts} >
             <Route exact path='/profile'>
               <Profile user={user} setUser={setUser} handleDelete={handleDelete} setRefresh={setRefresh} refresh={refresh} setPosts={setPosts} addPost={addPost}/>

@@ -12,6 +12,8 @@ export const AddContext = React.createContext()
 
 function Profile({addPost, user, setUser, users, handleDelete}) {
   console.log(user)
+  const [post, setPosts] = useState([])
+  const [refresh, setRefresh] = useState()
   const [toggle, setToggle] = useState(false)
   const [friendsCount, setFriendsCount]= useState(0)
   const posts = useContext(PostContext)
@@ -22,6 +24,21 @@ function Profile({addPost, user, setUser, users, handleDelete}) {
   };
 
   const handleAddClick = () => setFriendsCount(friendsCount + 1)
+
+  // function handleDelete(id) {
+  //   fetch(`/posts/${id}`, {
+  //   method: 'DELETE',
+  //   headers: { 
+  //     'Accept': 'application/json',
+  //     'Content-Type': 'application/json', }
+  //   }).then((r) => {
+  //     if (r.ok) {
+  //       setPosts((postData) => 
+  //       postData.filter((post)=> post.id !== id))
+  //     };
+  //     setRefresh(prev => !prev)
+  //   })
+  // }
 
     return (
         <>
@@ -54,9 +71,9 @@ function Profile({addPost, user, setUser, users, handleDelete}) {
             </div>
           </div>
           <br />
-            <PostForm />
+            <PostForm addPost = {addPost}/>
             <div>
-              <PostCont posts= {posts}addPost={addPost}/>
+              <PostCont posts= {posts} addPost={addPost} handleDelete={handleDelete}/>
             </div>
         </div>
       </div>

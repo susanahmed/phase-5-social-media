@@ -6,7 +6,7 @@ import PostCard from './PostCard'
 import EditPostForm from './EditPostForm'
 import './PostDetail.css'
 
-function PostDetail(){
+function PostDetail({updatePost}){
   const [post, setPost]= useState([])
   const [error, setError] = useState(null)
 
@@ -31,7 +31,7 @@ function PostDetail(){
   return (
     <>
     <div id ={id}>
-      <EditPostForm />
+      <EditPostForm updatePost= {updatePost}/>
       <br />
       <br />
       <div id ={id} className='post'>

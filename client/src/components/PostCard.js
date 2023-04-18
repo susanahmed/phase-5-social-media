@@ -5,8 +5,7 @@ import { Icon, Button } from "semantic-ui-react"
 import EditPostForm from './EditPostForm'
 
 function PostCard({post, updatePost, handleDelete}) {
-  console.log(post)
-  
+
     const {id, title, description, file, likes} = post
     const [posts, setPosts] = useState([])
     const [refresh, setRefresh] = useState(false)
@@ -14,20 +13,20 @@ function PostCard({post, updatePost, handleDelete}) {
     const params = useParams()
     const history=useHistory()
 
-    function handleDelete(id) {
-      fetch(`/posts/${id}`, {
-      method: 'DELETE',
-      headers: { 
-        'Accept': 'application/json',
-        'Content-Type': 'application/json', }
-      }).then((r) => {
-        if (r.ok) {
-          setPosts((postData) => 
-          postData.filter((post)=> post.id !== id))
-        };
-        setRefresh(prev => !prev)
-      })
-    }
+    // function handleDelete(id) {
+    //   fetch(`/posts/${id}`, {
+    //   method: 'DELETE',
+    //   headers: { 
+    //     'Accept': 'application/json',
+    //     'Content-Type': 'application/json', }
+    //   }).then((r) => {
+    //     if (r.ok) {
+    //       setPosts((postData) => 
+    //       postData.filter((post)=> post.id !== id))
+    //     };
+    //     setRefresh(prev => !prev)
+    //   })
+    // }
 
     return (
       <div id={id} className = 'post'>
