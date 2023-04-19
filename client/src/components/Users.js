@@ -15,7 +15,7 @@ function Users({friendsCount, handleAddClick}) {
     
         return (
             <div >
-                 {users?.map(user => <UserDisplay key={user.id} user={user} handleAddClick={handleAddClick}  />)}
+                {users?.map(user => <UserDisplay key={user.id} user={user} handleAddClick={handleAddClick}  />)}
         </div>
         )
       }

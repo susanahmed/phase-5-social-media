@@ -74,16 +74,24 @@ if __name__ == '__main__':
         p7 = Post(title='WHY????', description='Knowledge is power, question everything.', file='https://assets-global.website-files.com/5f3c19f18169b62a0d0bf387/60d33be8cf4ba7565123c8bc_YPD3ulQQAGQpOcnqIm3QzSTRgzmr1SexpW9ZjMpJ1mAnUxx4iF05XOTu44sk0qQG-8XgBcYmGZGAD-5SAZvJl3TjtmhgWnn-w0C2XKwhBscV78RVvhwZfyp0v_Pa6sNj5zxpOvRW.png', likes = random.randint(1, 3000))
         posts.append(p7)
 
-        # for i in range(100):
-        #     post = Post(
-        #         title= fake.word(),
-        #         description = fake.sentence(),
-        #         file = "https://cdn.guff.com/site_0/media/33000/32406/items/6c5b77833010314ab28d6d09.jpg",
-        #         likes = random.randint(1, 3000),
+        p8 = Post(title='Fool Proof', description='Sometimes you have to work smarter, not harder.', file='https://i.pinimg.com/474x/ac/c4/73/acc47328efd0c6b977bf004d7262f593.jpg', likes = random.randint(1, 3000))
+        posts.append(p8)
 
-        #     )
-           
-        #     posts.append(post)
+        p9 = Post(title='Coffee is Magic', description='My code may not work, but my coffee always does.', file='https://i.pinimg.com/474x/e1/86/be/e186be19cae871b7f46a72db0e06bb63.jpg', likes = random.randint(1, 3000))
+        posts.append(p9)
+
+        p11 = Post(title='CONFUSION?', description='Troubleshooting your code to work is great. Understanding how your code actually works is even greater.', file='https://i.pinimg.com/474x/e8/8b/26/e88b262066175531a3c4282e452c52f0.jpg', likes = random.randint(1, 3000))
+        posts.append(p11)
+
+        p12 = Post(title='COMMENT IT OUT', description='Oh, that doesnt work? Well, now it just doesnt exist.', file='https://i.pinimg.com/564x/ab/91/05/ab9105c7bda948c9216e0c8a28019d4b.jpg', likes = random.randint(1, 3000))
+        posts.append(p12)
+
+        p13 = Post(title='What does it all mean?', description='Did I write the code? Yes. Do I understand the code? What code?', file='https://res.cloudinary.com/practicaldev/image/fetch/s--L0oKjULP--/c_limit%2Cf_auto%2Cfl_progressive%2Cq_auto%2Cw_880/https://cdn-images-1.medium.com/max/1200/1%2A0VaTwYF3RdMFp1PjY_1NqA%402x.jpeg', likes = random.randint(1, 3000))
+        posts.append(p13)
+
+        p14 = Post(title='Code in my sleep', description='This has occurred to me numerous times during this project alone.', file='https://i.pinimg.com/474x/df/df/cf/dfdfcf09f3760b7b730fdbb9a78f02d9.jpg', likes = random.randint(1, 3000))
+        posts.append(p14)
+
         db.session.add_all(posts)
         db.session.commit()
 
@@ -109,6 +117,17 @@ if __name__ == '__main__':
         db.session.add_all(messages)
         db.session.commit()
 
+        friends = []
+
+        for i in range(100):
+            friend = Friend(
+                name =fake.name(),
+                user_id= random.randint(1,100)
+            )
+            friends.append(friend)
+
+        db.session.add_all(friends)
+        db.session.commit()
 
 
 

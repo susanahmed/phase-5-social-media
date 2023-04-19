@@ -25,7 +25,7 @@ function Navigation({user, setUser, handleChange}) {
       <div className="topbarLeft">
         <span className="logo"><Link to = '/home'>TECHBOOK</Link></span>
       </div>
-      <div className="topbarCenter">
+      <div className="topbarCenter"><h3>A Community Designed with Tech in Mind </h3>
       </div>
       <div className="topbarRight">
         <div className="topbarLinks">
