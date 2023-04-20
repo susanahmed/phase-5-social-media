@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import {useHistory} from 'react-router-dom'
 import './Login.css'
+import './SignUpForm.css'
 
 
 function SignupForm({ onLogin }) {
@@ -50,8 +51,8 @@ function SignupForm({ onLogin }) {
     <form onSubmit={handleSubmit} className="font-link">
       {error&& <h2 style= {{color:'red'}}>{error}</h2>}
       <h2 className="font-link">Sign Up for TECHBOOK</h2>
-      <div>
-        <label htmlFor="username">Username</label>
+      <div className="div">
+        <label className="label" htmlFor="username">Username</label>
         <input
           type="text"
           id="username"
@@ -61,8 +62,8 @@ function SignupForm({ onLogin }) {
         />
       </div>
       <br/>
-      <div>
-        <label htmlFor="password">Password</label>
+      <div className="div">
+        <label className="label" htmlFor="password">Password</label>
         <input
           type="password"
           id="password"
@@ -72,8 +73,8 @@ function SignupForm({ onLogin }) {
         />
       </div>
       <br />
-      <div>
-        <label htmlFor="password">Password Confirmation</label>
+      <div className="div">
+        <label className="label" htmlFor="password">Password Confirmation</label>
         <input
           type="password"
           id="password_confirmation"
@@ -83,8 +84,8 @@ function SignupForm({ onLogin }) {
         />
       </div>
       <br />
-      <div>
-        <label htmlFor="imageUrl">Profile Image</label>
+      <div className="div">
+        <label className="label" htmlFor="imageUrl">Profile Image</label>
         <input
           type="text"
           id="imageUrl"
@@ -93,8 +94,8 @@ function SignupForm({ onLogin }) {
         />
       </div>
       <br />
-      <div>
-        <label htmlFor="backgroundUrl">Background Image</label>
+      <div className="div">
+        <label className="label" htmlFor="backgroundUrl">Background Image</label>
         <input
           type="text"
           id="backgroundUrl"
@@ -103,8 +104,8 @@ function SignupForm({ onLogin }) {
         />
       </div>
       <br />
-      <div>
-        <label htmlFor="bio">Bio</label>
+      <div className="div">
+        <label className="label" htmlFor="bio">Bio</label>
         <textarea
           rows="3"
           id="bio"
@@ -112,8 +113,8 @@ function SignupForm({ onLogin }) {
           onChange={(e) => setBio(e.target.value)}
         />
       </div>
-      <div>
-        <label htmlFor="location">Location</label>
+      <div className="div">
+        <label className="label" htmlFor="location">Location</label>
         <textarea
           rows="text"
           id="location"

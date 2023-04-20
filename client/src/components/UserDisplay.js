@@ -12,22 +12,21 @@ function UserDisplay({user, handleAddClick}){
 
     
     return (
-        <>
-    <li className="sidebarFriendhr">
+        <ul className="ul">
+    <li className ="hrsolid">
         <img className="sidebarFriendImg" src="https://api.dicebear.com/6.x/bottts/svg" alt="" />
         <Link to= {`users/${id}`}>
         <span className="sidebarFriendName"> {user.username} </span>
         </Link>
         <button>
         <BsPersonFillAdd onClick={handleAddClick}/>
-
         </button>
         <br />
         <span className="sidebarFriendName"> Location: {user.location} </span>
         <br />
         <span className="sidebarFriendName"> Bio: {user.bio} </span>
     </li>
-    </>
+    </ul>
     )
 }
 

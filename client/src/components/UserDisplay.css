@@ -2,6 +2,7 @@
     display: flex;
     align-items: center;
     margin-bottom: 15px;
+    list-style: none;
   }
   
   .sidebarFriendImg {
@@ -10,4 +11,13 @@
     border-radius: 50%;
     object-fit: cover;
     margin-right: 10px;
+  }
+
+  .ul {
+    list-style-type: none;
+  }
+
+  .hrsolid {
+    border-top: 3px solid #bbb;
+    position: relative;
   }
